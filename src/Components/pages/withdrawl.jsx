@@ -6,12 +6,6 @@ import styles from "./pages.module.css";
 export default function Withdrawl() {
   return (
     <>
-      <div className={styles.headContent}>
-        <img className={styles.asideIcon} src="/images/user.png" alt="" />{" "}
-        <span style={{ fontWeight: "600", fontSize: "large" }}>
-          Mr. Jai Rathore
-        </span>
-      </div>
       <div>
         <Card style={{maxWidth:"200px",marginTop:"25px"}}>
           <Card.Header as="h5">Payout Money</Card.Header>

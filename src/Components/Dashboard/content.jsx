@@ -5,18 +5,12 @@ import CopyButton from "./refrral";
 export default function Content() {
   return (
     <>
-      <div className={styles.headContent}>
-        <img className={styles.asideIcon} src="./images/user.png" alt="" />{" "}
-        <span style={{ fontWeight: "600", fontSize: "large" }}>
-           Mr. Jai Rathore
-        </span>
-      </div>
       <div className={styles.refrralDiv}>
         <div>
-          <p>Refrral Link</p>
+          <p>Prospect Link</p>
         </div>
         <div>
-          <CopyButton text="BrokersHouse/referral/link/r34cc1" />
+          <CopyButton text="BrokersHouse/Prospect/link/r34cc1" />
         </div>
       </div>
       <div className={styles.sponserDiv}>
@@ -33,11 +27,11 @@ export default function Content() {
           <h3>&#8377; </h3>
         </div>
         <div className={styles.infoDiv}>
-          <h5>Total Referral Bonous</h5>
+          <h5>Total Prospect Bonous</h5>
           <h3>&#8377; </h3>
         </div>
         <div className={styles.infoDiv}>
-          <h5>Last Referral Bonous</h5>
+          <h5>Last Prospect Bonous</h5>
           <h3>&#8377;</h3>
         </div>
       </div>
@@ -60,11 +54,11 @@ export default function Content() {
         </div>
         <div className={styles.buttonDiv}>
         <img className={styles.buttonIcon} src="./images/network.png" alt="" />
-          <p>My Referral</p>
+          <p>My Bonus</p>
         </div>
         <div className={styles.buttonDiv}>
         <img className={styles.buttonIcon} src="./images/bonus.png" alt="" />
-         <p>Referral Bonus</p>
+         <p>Prospect Bonus</p>
          </div>
         <div className={styles.buttonDiv}>
         <img className={styles.buttonIcon} src="./images/phone-call.png" alt="" />

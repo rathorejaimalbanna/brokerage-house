@@ -25,12 +25,12 @@ export default function Aside() {
         <ul className={styles.uList}>
             <li className={styles.uListItem} onClick={()=> navigate("/")}><img className={styles.asideIcon} src="/images/dashboard.png" alt="" /> Dashboard</li>
             <li className={styles.uListItem} onClick={()=> navigate("project")}><img className={styles.asideIcon} src="/images/project-management.png" alt="" /> Project</li>
-            <li className={styles.uListItem} onClick={()=> navigate("booking")}><img className={styles.asideIcon} src="/images/history.png" alt="" /> Booking History</li>
+            <li className={styles.uListItem} onClick={()=> navigate("booking")}><img className={styles.asideIcon} src="/images/real-estate.png" alt="" /> Booking History</li>
             <li className={styles.uListItem} onClick={()=> navigate("tranction")}><img className={styles.asideIcon} src="/images/transfer.png" alt="" />Tranction</li>
-            <li className={styles.uListItem} onClick={()=> navigate("withdrawl")}><img className={styles.asideIcon} src="/images/withdrawl.png" alt="" />Withdrawl</li>
+            <li className={styles.uListItem} onClick={()=> navigate("withdrawl")}><img className={styles.asideIcon} src="/images/coin.png" alt="" />Withdrawl</li>
             <li className={styles.uListItem} onClick={()=> navigate("withdrawlHistory")}><img className={styles.asideIcon} src="/images/history.png" alt="" />Withdrawl History</li>
-            <li className={styles.uListItem} onClick={()=> navigate("referral")}><img className={styles.asideIcon} src="/images/network.png" alt="" />My Referral</li>
-            <li className={styles.uListItem} onClick={()=> navigate("bonus")}><img className={styles.asideIcon} src="/images/bonus.png" alt="" />Referral Bonus</li>
+            <li className={styles.uListItem} onClick={()=> navigate("referral")}><img className={styles.asideIcon} src="/images/network.png" alt="" />My Prospect</li>
+            <li className={styles.uListItem} onClick={()=> navigate("bonus")}><img className={styles.asideIcon} src="/images/bonus.png" alt="" />Prospect Bonus</li>
             <li className={styles.uListItem} onClick={()=> navigate("bank")}><img className={styles.asideIcon} src="/images/bank.png" alt="" />Manage Bank</li>
             <li className={styles.uListItem} onClick={()=> navigate("contact")}><img className={styles.asideIcon} src="/images/phone-call.png" alt="" />Contact Us</li>
             <li className={styles.uListItem} onClick={()=> navigate("privacy")}><img className={styles.asideIcon} src="/images/insurance.png" alt="" />Privacy Policy</li>

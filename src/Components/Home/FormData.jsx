@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styles from "./home.module.css";
 import {
   createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth, db } from "../../firebase";
@@ -21,7 +20,6 @@ export default function FormData() {
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
   const [load, setLoad] = useState(false);
-  const [reset,setReset] = useState(false)
   const navigate = useNavigate();
   function handleData() {
     if (data === "Sign Up") {
@@ -59,9 +57,7 @@ export default function FormData() {
     setLoad(false);
   }
 
-  async function handleReset() {
-    setReset(true)
-  }
+
 
   async function handleLogIN(e) {
     e.preventDefault();
@@ -122,13 +118,13 @@ export default function FormData() {
                 required
               />
               {/* Render password input */}
-              {reset === false && <input
+              <input
                 type="password"
                 placeholder="Password"
                 className={styles.formInput}
                 onChange={(e) => setPass(e.target.value)}
                 required
-              />}
+              />
               {data === "Sign Up" && (
                 <>
                   <input
@@ -197,7 +193,7 @@ export default function FormData() {
                     Forgot Password?{" "}
                     <button
                       className={styles.signInButton}
-                      onClick={handleReset}
+                      onClick={()=>navigate("/reset")}
                     >
                       Reset Password
                     </button>

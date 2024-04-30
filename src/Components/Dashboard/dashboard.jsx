@@ -5,16 +5,20 @@ import { Outlet, useNavigate } from "react-router";
 import { doc, getDoc } from "firebase/firestore";
 import styles from "./dashboard.module.css";
 import Aside from "./aside";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions, userSelector } from "../../Redux/userReducer/userReducer";
 
 export default function Dashboard() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {user} = useSelector(userSelector)
 
   async function fetchDdata(email) {
     const docRef = doc(db, "userData", email);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       // Update user data using dispatch and navigate to home page
-      // dispatch(userActions.addUser(docSnap.data()));
+      dispatch(userActions.setUser(docSnap.data()));
     } else {
       // Alert for invalid credentials
       navigate("home");
@@ -39,6 +43,12 @@ export default function Dashboard() {
         <Aside />
       </div>
       <div className={styles.contentDiv}>
+      <div className={styles.headContent}>
+        <img className={styles.asideIcon} src="/images/user.png" alt="" />{" "}
+        <span style={{ fontWeight: "600", fontSize: "large" }}>
+          {user?.name}
+        </span>
+      </div>
         <Outlet userData={"userData string"}/>
       </div>
     </div>

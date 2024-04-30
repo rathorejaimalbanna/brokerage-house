@@ -17,6 +17,14 @@ import Contact from './Components/pages/contact';
 import Privacy from './Components/pages/privacy';
 import Terms from './Components/pages/terms';
 import About from './Components/pages/about';
+import Admin from './Components/Admin/admin';
+import AdminContent from './Components/Admin/adminContent';
+import ResetPas from './Components/Home/resetPas';
+import ProjectDetails from './Components/pages/projectDetails';
+import AddProject from './Components/Admin/addProject';
+import Kyc from './Components/Admin/kyc';
+import UserDetails from './Components/Admin/userDetails';
+import UserAcounts from './Components/Admin/userAcounts';
 
 // App component responsible for routing and rendering different pages
 export default function App() {
@@ -28,6 +36,7 @@ export default function App() {
       children: [
         { index: true, element: <Content/>},
         {path:"project", element:<Project/>},
+        {path:"project/:id", element:<ProjectDetails/>},
         {path:"booking", element:<Booking/>},
         {path:"tranction", element:<Tranction/>},
         {path:"withdrawl", element:<Withdrawl/>},
@@ -38,11 +47,19 @@ export default function App() {
         {path:"contact", element:<Contact/>},
         {path:"privacy", element:<Privacy/>},
         {path:"terms", element:<Terms/>},
-        {path:"about", element:<About/>}
+        {path:"about", element:<About/>},
       ]
       },
         { path: 'home', element: <Home /> },
-        // { path: 'myOrders', element: <Orders /> }
+        {path: "reset", element: <ResetPas/>},
+        {path:"admin", element:<Admin/>,children:[
+          {index: true, element:<AdminContent/>},
+          {path: "addProject", element:<AddProject/>},
+          {path: "kyc", element:<Kyc/>},
+          {path: "userAccounts", element:<UserAcounts/>},
+          {path: "userDetails", element:<UserDetails/>},
+          {path:"addProject/:id", element:<ProjectDetails/>}
+        ]}
       
     
   ]);
