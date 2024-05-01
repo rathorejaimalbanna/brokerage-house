@@ -3,24 +3,23 @@ import styles from "./pages.module.css"
 import ProjectCard from "./card";
 import { useDispatch, useSelector } from "react-redux";
 import { projectActions, projectSelectors } from "../../Redux/projectReducer/projectReducer";
-import { doc, getDoc } from "firebase/firestore";
+import { collection,  getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
 export default function Project() {
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    async function getData(){
-    const docRef = doc(db, "projects", "All_Projects");
-    const docSnap = await getDoc(docRef);
-  
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-      dispatch(projectActions.loadProject(docSnap.data().projectList));
-    } else {
-      // docSnap.data() will be undefined in this case
-      console.log("No such document!");
-    }}
+    async function getData()
+    {const querySnapshot = await getDocs(collection(db, "projects"));
+      // const data = querySnapshot.map((doc)=> doc.data())
+      const userArray = []
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        userArray.push({...doc.data()});
+      });
+      dispatch(projectActions.loadProject(userArray))
+    }
     getData()
   },[dispatch])
 

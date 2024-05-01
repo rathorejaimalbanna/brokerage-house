@@ -16,6 +16,10 @@ const projectSlice = createSlice({
         },
         loadProject:(state,action)=> {
             state.projects = action.payload
+        },
+        editPlots:(state,action)=>{
+
+            state.projects[action.payload.projectId].plots = action.payload.plot
         }
     }
 });

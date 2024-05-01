@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function UserDetails() {
+export default function Prospects() {
   return (
     <div>
       

@@ -23,8 +23,11 @@ import ResetPas from './Components/Home/resetPas';
 import ProjectDetails from './Components/pages/projectDetails';
 import AddProject from './Components/Admin/addProject';
 import Kyc from './Components/Admin/kyc';
-import UserDetails from './Components/Admin/userDetails';
 import UserAcounts from './Components/Admin/userAcounts';
+import Prospects from './Components/Admin/prospect';
+import Tranctions from './Components/Admin/tranction';
+import NewProject from './Components/Admin/newProject';
+import EditProject from './Components/Admin/editProject';
 
 // App component responsible for routing and rendering different pages
 export default function App() {
@@ -57,8 +60,10 @@ export default function App() {
           {path: "addProject", element:<AddProject/>},
           {path: "kyc", element:<Kyc/>},
           {path: "userAccounts", element:<UserAcounts/>},
-          {path: "userDetails", element:<UserDetails/>},
-          {path:"addProject/:id", element:<ProjectDetails/>}
+          {path: "prospect", element:<Prospects/>},
+          {path:"addProject/:id", element:<EditProject/>},
+          {path:"tranction", element:<Tranctions/>},
+          {path:"newProject", element:<NewProject/>}
         ]}
       
     

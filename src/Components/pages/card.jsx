@@ -17,8 +17,8 @@ function ProjectCard(props) {
         <Card.Text>
           <img className={styles.asideIcon} src="/images/placeholder.png" alt="loc" />{props.project.location}
         </Card.Text>
-        <Button style={{marginRight:"25%"}} variant="primary" onClick={handleProject}>{props.type === "project" ? "Book Property":"Property Details"}</Button>
-        {props.type === "project" && <Button variant="info" ><Link style={{color:"black",textDecoration:"none"}} to="/contact">Contact Us</Link></Button>}
+        <Button style={{marginRight:"25%"}} variant="primary" onClick={handleProject}>{props.type === "project" ? "Book Property":"Edit Property Details"}</Button>
+        {props.type === "project" && <Link style={{color:"black",textDecoration:"none"}} to="/contact"><Button variant="info" >Contact Us</Button></Link>}
       </Card.Body>
     </Card>
   );

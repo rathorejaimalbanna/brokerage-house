@@ -110,6 +110,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 10px;
 }
 .indiSpan{
     border-radius: 50%;
@@ -119,4 +120,5 @@
     margin-right: 10px;
     padding-top: 5px;
     border: 1px solid black;
+    font-size: larger;
 }

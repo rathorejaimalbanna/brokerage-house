@@ -41,7 +41,7 @@ export default function Content() {
           <p>Book Now</p>
         </div>
         <div className={styles.buttonDiv}>
-        <img className={styles.buttonIcon} src="./images/withdrawl.png" alt="" />
+        <img className={styles.buttonIcon} src="./images/coin.png" alt="" />
           <p>Withdrawl</p>
         </div>
         <div className={styles.buttonDiv}>
