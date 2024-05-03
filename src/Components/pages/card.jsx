@@ -2,9 +2,24 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import styles from "./pages.module.css"
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { projectActions } from '../../Redux/projectReducer/projectReducer';
+import { deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../../firebase';
 
 function ProjectCard(props) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  async function deleteProject() {
+  await deleteDoc(doc(db, "projects", props.project.name));
+  };
+
+  function handleDelete()
+  { if(window.confirm(`Are you sure you want to delete Project ${props.project.name}?`))
+  {dispatch(projectActions.removeProject(props.project.name));
+    deleteProject()};
+  };
+
   function handleProject()
   {
     navigate(`${props.id}`)
@@ -17,8 +32,9 @@ function ProjectCard(props) {
         <Card.Text>
           <img className={styles.asideIcon} src="/images/placeholder.png" alt="loc" />{props.project.location}
         </Card.Text>
-        <Button style={{marginRight:"25%"}} variant="primary" onClick={handleProject}>{props.type === "project" ? "Book Property":"Edit Property Details"}</Button>
+        <Button style={{marginRight:"25%",fontSize:"small"}} variant="primary" onClick={handleProject}>{props.type === "project" ? "Book Property":"Edit Property Details"}</Button>
         {props.type === "project" && <Link style={{color:"black",textDecoration:"none"}} to="/contact"><Button variant="info" >Contact Us</Button></Link>}
+        {props.type === "add" && <Button onClick={handleDelete} variant='warning' style={{width:"auto",fontSize:"small"}} >Delete Project</Button>}
       </Card.Body>
     </Card>
   );

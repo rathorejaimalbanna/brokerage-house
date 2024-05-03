@@ -50,11 +50,11 @@ export default function NewProject() {
       <div>
         <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
           <h4>Enter Project Name</h4>
-          <input type="text" placeholder='Project Name' className={styles.inputField} value={name} onChange={(e) => setName(e.target.value)} />
+          <input type="text" required placeholder='Project Name' className={styles.inputField} value={name} onChange={(e) => setName(e.target.value)} />
           <h4>Input Image Url</h4>
-          <input type="text" placeholder='Image Url' className={styles.inputField} value={image} onChange={(e) => setImage(e.target.value)} />
+          <input type="text" required placeholder='Image Url' className={styles.inputField} value={image} onChange={(e) => setImage(e.target.value)} />
           <h4>Enter Location</h4>
-          <input type="text" placeholder='Location' className={styles.inputField} value={location} onChange={(e) => setLocation(e.target.value)} />
+          <input type="text" required placeholder='Location' className={styles.inputField} value={location} onChange={(e) => setLocation(e.target.value)} />
           <h4>Provide Plot Name Prefix</h4>
           <input type="text" placeholder='Prefix for eg-a,e,g' className={styles.inputField} value={prefix} onChange={(e) => setPrefix(e.target.value)} />
           <h4>Total Number Of Plots</h4>

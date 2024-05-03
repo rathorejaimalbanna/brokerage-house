@@ -30,11 +30,11 @@ export default function Modal(props) {
     props.handleClose();
   }
   function handleDelete() {
-    alert(`Plot with id ${props.project.plots[props.plotId].id} is deleted`)
-    var plotsObject = [...props.project.plots];
+    if (window.confirm(`Are you sure you want to delete plot with id ${props.project.plots[props.plotId].id}?`))
+    {var plotsObject = [...props.project.plots];
     plotsObject.splice(props.plotId, 1);
     updatePlot(plotsObject);
-    dispatch(projectActions.editPlots({plot:plotsObject,projectId:props.projectId}))
+    dispatch(projectActions.editPlots({plot:plotsObject,projectId:props.projectId}))}
     props.handleClose();
   }
   return (

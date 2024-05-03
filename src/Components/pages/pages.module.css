@@ -122,3 +122,18 @@
     border: 1px solid black;
     font-size: larger;
 }
+.inputField{
+    width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    padding-left: 1%;
+}
+.submitButton{
+    display: block;
+    height: 40px;
+    width: 50%;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-weight: 600;
+    background-image: linear-gradient(to right,rgb(122, 122, 202),rgb(55, 55, 243));
+}

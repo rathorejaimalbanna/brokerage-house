@@ -32,6 +32,7 @@ export default function FormData() {
 
   async function setUserInfo() {
     await setDoc(doc(db, "userData", email), {
+      email,
       name,
       phone,
       address,

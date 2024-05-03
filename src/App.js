@@ -28,6 +28,7 @@ import Prospects from './Components/Admin/prospect';
 import Tranctions from './Components/Admin/tranction';
 import NewProject from './Components/Admin/newProject';
 import EditProject from './Components/Admin/editProject';
+import AddBank from './Components/pages/addBank';
 
 // App component responsible for routing and rendering different pages
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
         {path:"privacy", element:<Privacy/>},
         {path:"terms", element:<Terms/>},
         {path:"about", element:<About/>},
+        {path:"addBank", element:<AddBank/>}
       ]
       },
         { path: 'home', element: <Home /> },
