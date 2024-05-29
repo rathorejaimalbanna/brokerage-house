@@ -12,16 +12,16 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 110vh;
+    height: 100vh;
     width: 20vw;
     overflow-y: scroll;
     box-shadow: 0 40px 60px -40px #2d2d2d;
     background-color: #fff;
-    padding-bottom: 20vh;
 }
-.asideDiv::-webkit-scrollbar{
-    width: 10px;
-}
+.asideDiv::-webkit-scrollbar {
+    display: none;
+  }
+
 .contentDiv{
     min-height: 100vh;
     width: 80%;
@@ -29,7 +29,8 @@
     padding: 1.5%;
     display: flex;
     flex-direction: column;
-    background-color: rgb(242,245,250);
+    /* background-color: rgb(242,245,250); */
+    background-color: rgb(239, 208, 208);
     box-sizing: border-box;
     overflow-x:hidden;
 }
@@ -41,7 +42,8 @@
   padding-left: 5%;
 }
 .asideList{
-   height: 85vh;
+   height: 80vh;
+   margin-bottom: 50px;
 }
 .uList{
     list-style: none;
@@ -72,6 +74,7 @@
     padding: 1%;
     border: .1px solid rgb(212, 211, 211);
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 .copyButton{
@@ -96,11 +99,12 @@
     color: rgb(105,105,105);
 }
 .refraalContainer{
-    width: 90%;
+    width: 100%;
     height: 40px;
     padding: 5px;
     background-color: rgb(242,245,250);
     display: flex;
+    justify-content: space-between;
     border-radius: 10px;
 }
 .sponserDiv{
@@ -114,8 +118,9 @@
     width: 23vw;
     height: 150px;
     border-radius: 10px;
-    color: white;
-    background-image: linear-gradient(to right,rgb(39,76,180),rgb(70,140,245)) ;
+    color: black;
+    /* background-image: linear-gradient(to right,rgb(39,76,180),rgb(70,140,245)) ; */
+    background-image: linear-gradient(to right,rgb(164,129,17),rgb(246, 231, 121)) ;
     margin: 10px;
     padding: 2.5%;
 }
@@ -149,4 +154,150 @@
     border-radius: 10px;
     color: white;
     padding: 2%;
+}
+.infoDiv{
+    font-size: 2rem;
+    font-weight: 500;
+}
+.sideButton{
+    display: none;
+}
+.adminButton{
+    margin-right: 20px;
+}
+/* Side bar */
+
+.sideBar{
+    width: 300px;
+    height: 100vh;
+    position: fixed;
+    overflow-y: scroll;
+    top: 0;
+    z-index: 20;
+    background-color: #fff;
+    color: black;
+    opacity: 1;
+    display: hidden;
+    transition: left ease-in-out 0.5s;
+}
+.sideBar::-webkit-scrollbar {
+    display: none;
+  }
+
+.sideUl{
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 50%;
+    margin-top: 20vh;
+}
+
+
+/* Media queries */
+
+@media screen and (max-width: 1200px) {
+    .mainDiv {
+        flex-direction: column;
+    }
+    .asideDiv {
+        width: 25vw;
+    }
+    .contentDiv {
+        width: 75%;
+        margin-left: 25vw;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .asideDiv {
+        width: 30vw;
+    }
+    .contentDiv {
+        width: 70%;
+        margin-left: 30vw;
+    }
+    .infoDiv, .buttonDiv {
+        width: 30vw;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .asideDiv {
+        display: none;
+    }
+    .contentDiv {
+        width: 100%;
+        margin-left: 0;
+    }
+    .infoDiv, .buttonDiv {
+        width: 45vw;
+    }
+    .sideButton{
+        display: block;
+    }
+    .adminButton{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .contentDiv {
+        padding: 2%;
+    }
+    .headContent, .refrralDiv, .sponserDiv, .bonous {
+        width: 100%;
+        margin: 10px 0;
+    }
+    .infoDiv, .buttonDiv{
+        width: 46%;
+        height: 100px;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    .headContent, .refrralDiv {
+        padding: 2%;
+    }
+    .asideLogo {
+        padding-top: 5vh;
+        padding-left: 2%;
+    }
+    .uListItem {
+        font-size: small;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .contentDiv {
+        padding: 2%;
+    }
+    .headContent, .refrralDiv, .sponserDiv, .bonous {
+        width: 100%;
+        margin: 10px 0;
+    }
+    .infoDiv, .buttonDiv{
+        width: 44%;
+    }
+    .headContent, .refrralDiv {
+        padding: 1%;
+    }
+    .asideLogo {
+        padding-top: 5vh;
+        padding-left: 2%;
+        height: 15vh;
+    }
+    .uListItem{
+        font-size: larger !important;
+    }
+    .uListItem {
+        font-size: small;
+    }
+    .copyButton {
+        width: 40px;
+    }
+    .buttonIcon {
+        height: 24px;
+        width: 24px;
+    }
 }

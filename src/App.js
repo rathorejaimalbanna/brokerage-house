@@ -29,6 +29,8 @@ import Tranctions from './Components/Admin/tranction';
 import NewProject from './Components/Admin/newProject';
 import EditProject from './Components/Admin/editProject';
 import AddBank from './Components/pages/addBank';
+import BookingRequest from './Components/Admin/bookingRequest';
+import BookingHistory from './Components/Admin/bookingHistory';
 
 // App component responsible for routing and rendering different pages
 export default function App() {
@@ -65,7 +67,9 @@ export default function App() {
           {path: "prospect", element:<Prospects/>},
           {path:"addProject/:id", element:<EditProject/>},
           {path:"tranction", element:<Tranctions/>},
-          {path:"newProject", element:<NewProject/>}
+          {path:"newProject", element:<NewProject/>},
+          {path:"bookingRequest", element:<BookingRequest/>},
+          {path:"bookingHistory", element:<BookingHistory/>},
         ]}
       
     

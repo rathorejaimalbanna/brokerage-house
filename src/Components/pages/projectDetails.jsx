@@ -1,17 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { projectSelectors } from "../../Redux/projectReducer/projectReducer";
 import styles from "./pages.module.css";
+import BookModal from "./bookModal";
+import PlotDetails from "./plotDetails";
 
 export default function ProjectDetails() {
   const params = useParams();
+  const [show,setShow] = useState(false);
+  const [plotInfo,setPlotInfo] = useState(false);
+  const [plotModalDetail,setModalDetail] = useState({})
   const loadedProjects = useSelector(projectSelectors);
   const project = loadedProjects[params.id];
+  function handleShow()
+  {
+    setShow(true)
+    setPlotInfo(false)
+  }
+  function handleClose()
+  {
+    setShow(false)
+  };
+  function handleCloseInfo()
+  {
+    setPlotInfo(false)
+  }
+  function showInfo(info)
+  { setModalDetail(info)
+    setPlotInfo(true)
+  }
 
   if (project) {
     return (
       <>
+      {plotInfo && <div className={styles.modalContainer}> <div className={styles.modalDiv}>
+      <PlotDetails handleCloseInfo={handleCloseInfo} handleShow={handleShow} plotDetail={plotModalDetail} projectName={project.name} projectLocation={project.location}  handleClose={handleClose}  />
+
+    </div></div>}
+      {show && <div className={styles.modalContainer}> <div className={styles.modalDiv}>
+      <BookModal projectId={params.id} project={project} plotDetail={plotModalDetail}  handleClose={handleClose}  />
+
+    </div></div>}
         <div>
           <h1 style={{ marginTop: "25px", color: "rgb(13,110,253)" }}>
             {project.name}
@@ -41,8 +71,9 @@ export default function ProjectDetails() {
             </div>
           </div>
           <div className={styles.plotsDiv}>
-            {project.plots.map((item) => (
+            {project.plots.map((item,arrId) => (
               <div
+              onClick={()=>showInfo({price:item.price,area:item.area,id:item.id,arrId:arrId,status:item.status})}
                 className={styles.plotDiv}
                 style={{
                   backgroundColor:

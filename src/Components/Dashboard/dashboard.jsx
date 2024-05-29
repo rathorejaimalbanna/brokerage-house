@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase";
 import { Outlet, useNavigate } from "react-router";
@@ -7,11 +7,13 @@ import styles from "./dashboard.module.css";
 import Aside from "./aside";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions, userSelector } from "../../Redux/userReducer/userReducer";
+import Button from "react-bootstrap/Button";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {user} = useSelector(userSelector)
+  const { user } = useSelector(userSelector);
+  const navigate = useNavigate();
+  const [side, setSide] = useState(false);
 
   async function fetchDdata(email) {
     const docRef = doc(db, "userData", email);
@@ -21,7 +23,11 @@ export default function Dashboard() {
       dispatch(userActions.setUser(docSnap.data()));
     } else {
       // Alert for invalid credentials
-      navigate("home");
+      const userDetails = {
+        name: "Guest",
+        email: "guest@gmail.com",
+      };
+      dispatch(userActions.setUser(userDetails));
     }
   }
 
@@ -31,25 +37,70 @@ export default function Dashboard() {
         fetchDdata(user.email);
       } else {
         // User is signed out
-        navigate("/home");
+        const userDetails = {
+          name: "Guest",
+          email: "guest@gmail.com",
+        };
+        dispatch(userActions.setUser(userDetails));
       }
     });
-  });
+  }, [dispatch]);
 
+  function handleLogin() {
+    navigate("/home");
+  }
+  function handleSide() {
+    setSide(!side);
+  }
 
   return (
     <div className={styles.mainDiv}>
       <div className={styles.asideDiv}>
         <Aside />
       </div>
-      <div className={styles.contentDiv}>
-      <div className={styles.headContent}>
-        <img className={styles.asideIcon} src="/images/user.png" alt="" />{" "}
-        <span style={{ fontWeight: "600", fontSize: "large" }}>
-          {user?.name}
-        </span>
+
+      <div style={{ position: "relative" }}>
+        <div className={styles.sideBar} style={{ left: side ? "0" : "-300px" }}>
+          <Aside side handleSide={handleSide} />
+        </div>
       </div>
-        <Outlet userData={"userData string"}/>
+
+      <div className={styles.contentDiv}>
+        <div className={styles.headContent}>
+          <span
+            style={{ fontWeight: "600", fontSize: "large", minWidth: "100px" }}
+          >
+            <img className={styles.asideIcon} src="/images/user.png" alt="" />{" "}
+            {user?.name}
+          </span>
+          <span style={{ display: "flex" }}>
+            <Button
+              className={styles.adminButton}
+              variant="info"
+              onClick={() => navigate("/admin")}
+            >
+              Go to admin dashboard
+            </Button>
+            {user?.name === "Guest" && (
+              <Button variant="danger" onClick={handleLogin}>
+                Login
+              </Button>
+            )}
+            <Button
+              className={styles.sideButton}
+              variant="info"
+              style={{ marginLeft: "20px", marginRight: "10px" }}
+              onClick={handleSide}
+            >
+              <img
+                src="/images/menu.png"
+                alt="menu"
+                style={{ objectFit: "contain", height: "20px" }}
+              />
+            </Button>
+          </span>
+        </div>
+        <Outlet userData={"userData string"} />
       </div>
     </div>
   );

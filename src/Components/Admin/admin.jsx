@@ -14,6 +14,7 @@ const Admin = () => {
         <div>
         <h2><img className={styles.growIcon} src="/images/security.png" alt="" />Admin Dashboard</h2>
         </div>
+          
         <div>
         <img className={styles.growIcon} src="/images/success.png" alt="" />{" "}
         <span style={{ fontWeight: "600", fontSize: "large" }}>

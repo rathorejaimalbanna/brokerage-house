@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styles from './dashboard.module.css'
+import React, { useState } from "react";
+import styles from "./dashboard.module.css";
 
 function CopyButton({ text }) {
   const [copied, setCopied] = useState(false);
@@ -7,12 +7,21 @@ function CopyButton({ text }) {
   const handleCopy = () => {
     navigator.clipboard.writeText(text);
     setCopied(true);
+    setTimeout(() => {
+      setCopied(false);
+    }, 800);
   };
 
   return (
     <div className={styles.refraalContainer}>
-      <span style={{marginRight:"80%",paddingLeft:"10px"}}>{text}</span>
-      <button className={styles.copyButton} onClick={handleCopy}>{copied? "Copied":<img className={styles.asideIcon} src="./images/copy.png" alt="" />}</button>
+      <span style={{ paddingLeft: "10px" }}>{text}</span>
+      <button className={styles.copyButton} onClick={handleCopy}>
+        {copied ? (
+          "Copied"
+        ) : (
+          <img className={styles.asideIcon} src="./images/copy.png" alt="" />
+        )}
+      </button>
     </div>
   );
 }

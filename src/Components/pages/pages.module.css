@@ -128,6 +128,12 @@
     border-radius: 10px;
     padding-left: 1%;
 }
+.inputFieldModal{
+    width: 80%;
+    height: 40px;
+    border-radius: 10px;
+    padding-left: 1%;
+}
 .submitButton{
     display: block;
     height: 40px;
@@ -137,3 +143,35 @@
     font-weight: 600;
     background-image: linear-gradient(to right,rgb(122, 122, 202),rgb(55, 55, 243));
 }
+.modalDiv{
+    position: fixed;
+    width: 25vw;
+    top: 50px;
+    left: 30vw;
+    border: 2px solid black;
+    z-index: 5;
+    background-color: rgb(61, 70, 85);
+    padding: 15px;
+    height: auto;
+    border-radius: 15px;
+    color: rgb(13,202,240);
+  }
+  .modalContainer{
+    position: fixed;
+    top: 0px;
+    z-index: 5;
+    width: 100vw;
+    height: 100vh;
+    background-color: transparent;
+  }
+  .modalContainer::before{
+    background-color: #000;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+   width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: .5;
+  }
