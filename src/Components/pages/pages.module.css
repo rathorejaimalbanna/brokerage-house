@@ -87,6 +87,7 @@
     flex-wrap: wrap;
     gap: 25px;
     margin-top: 20px;
+    align-items: center;
 }
 .projectImg{
     width: 100%;
@@ -129,7 +130,7 @@
     padding-left: 1%;
 }
 .inputFieldModal{
-    width: 80%;
+    width: 100%;
     height: 40px;
     border-radius: 10px;
     padding-left: 1%;
@@ -145,7 +146,7 @@
 }
 .modalDiv{
     position: fixed;
-    width: 25vw;
+    min-width: 23%;
     top: 50px;
     left: 30vw;
     border: 2px solid black;
@@ -175,3 +176,24 @@
     z-index: -1;
     opacity: .5;
   }
+
+
+  /* Media Queries */
+
+@media screen and (max-width:800px) {
+    .cardContainer{
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width:600px){
+    .modalContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .modalDiv{
+        width: 80%;
+        position: initial;
+    }
+}
