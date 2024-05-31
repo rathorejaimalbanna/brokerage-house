@@ -22,19 +22,19 @@ export default function Content() {
         </div>
         <div className={styles.infoDiv}>
           <h5>Wallet Balance</h5>
-          <p>&#8377; </p>
+          <p>&#8377; 0</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Total Payout</h5>
-          <p>&#8377; </p>
+          <p>&#8377; 0</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Total Prospect Bonous</h5>
-          <p>&#8377; </p>
+          <p>&#8377; 11000</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Last Prospect Bonous</h5>
-          <p>&#8377;</p>
+          <p>&#8377; 0</p>
         </div>
       </div>
       <div className={styles.sponserDiv}>

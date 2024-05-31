@@ -69,7 +69,7 @@ export default function Aside({ side, handleSide }) {
               src="/images/real-estate.png"
               alt=""
             />{" "}
-            Booking History
+            My Booking
           </li>
           <li
             className={styles.uListItem}

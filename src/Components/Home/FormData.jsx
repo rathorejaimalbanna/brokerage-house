@@ -38,6 +38,8 @@ export default function FormData() {
       address,
       pin,
       code,
+      booking: [],
+      withdrawl: [],
     });
   }
 
@@ -57,8 +59,6 @@ export default function FormData() {
       });
     setLoad(false);
   }
-
-
 
   async function handleLogIN(e) {
     e.preventDefault();
@@ -194,7 +194,7 @@ export default function FormData() {
                     Forgot Password?{" "}
                     <button
                       className={styles.signInButton}
-                      onClick={()=>navigate("/reset")}
+                      onClick={() => navigate("/reset")}
                     >
                       Reset Password
                     </button>

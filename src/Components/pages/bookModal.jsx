@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import styles from "./pages.module.css";
-import { addDoc, collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../Redux/userReducer/userReducer";
@@ -27,7 +27,7 @@ export default function BookModal(props) {
     });
   }
   async function addBooking() {
-    await addDoc(collection(db, "Booking Request"), {
+    await setDoc(doc(db, "Booking Request", props.plotDetail.id), {
       name,
       contact,
       addhar,
@@ -37,6 +37,15 @@ export default function BookModal(props) {
       plot: props.plotDetail.id,
       email: user.email,
       project: props.project.name,
+      status: "Pending",
+    });
+  }
+  async function addUserBooking(id) {
+    let bookingArr = [...user.booking];
+    bookingArr.push(id);
+    const frankDocRef = doc(db, "userData", user.email);
+    await updateDoc(frankDocRef, {
+      booking: bookingArr,
     });
   }
   async function handleSubmit(e) {
@@ -51,6 +60,7 @@ export default function BookModal(props) {
       area: props.plotDetail.area ? props.plotDetail.area : 0,
     };
     updatePlot(plotsObject);
+    addUserBooking(props.plotDetail.id);
     dispatch(
       projectActions.editPlots({
         plot: plotsObject,

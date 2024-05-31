@@ -1,26 +1,16 @@
-import {
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc } from "firebase/firestore";
 import styles from "./admin.module.css";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
-import { userSelector } from "../../Redux/userReducer/userReducer";
 import { projectSelectors } from "../../Redux/projectReducer/projectReducer";
 
 export default function BookingRequest() {
   const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
   const loadedProjects = useSelector(projectSelectors);
-
-  const { user } = useSelector(userSelector);
 
   async function getRequest() {
     const querySnapshot = await getDocs(collection(db, "Booking Request"));
@@ -54,7 +44,10 @@ export default function BookingRequest() {
         area,
         status,
       };
-      await deleteDoc(doc(db, "Booking Request", user.email));
+      const washingtonRef = doc(db, "Booking Request", id);
+      await updateDoc(washingtonRef, {
+        status: "Rejected",
+      });
       updatePlot(plotsArray, project[0].name);
       navigate("/admin/bookingRequest");
     }
@@ -69,18 +62,12 @@ export default function BookingRequest() {
         plot: item.plot,
         mode: item.mode,
         offer: item.offer,
+        email: item.email,
+        project: item.project,
       });
-      // await deleteDoc(doc(db, "Booking Request", user.email));
-      const q = query(
-        collection(db, "Booking Request"),
-        where("plot", "==", item.plot)
-      );
-      async function docDelete(docId) {
-        await deleteDoc(doc(db, "Booking Request", docId));
-      }
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach(async (doc) => {
-        docDelete(doc.id);
+      const washingtonRef = doc(db, "Booking Request", item.plot);
+      await updateDoc(washingtonRef, {
+        status: "Approved",
       });
       navigate("/admin/bookingRequest");
     }
@@ -103,47 +90,47 @@ export default function BookingRequest() {
         </thead>
         <tbody>
           {userData.length > 0 &&
-            userData.map((item) => (
-              <tr>
-                <td>{item.name}</td>
-                <td>{item.addhar} </td>
-                <td>{item.contact}</td>
-                <td>{item.plot}</td>
-                <td>{item.mode}</td>
-                <td>{item.offer}</td>
-                <td>
-                  <button
-                    onClick={() =>
-                      handleApprove({
-                        name: item.name,
-                        addhar: item.addhar,
-                        contact: item.contact,
-                        plot: item.plot,
-                        mode: item.mode,
-                        offer: item.offer,
-                      })
-                    }
-                    style={{ border: "none", backgroundColor: "transparent" }}
-                  >
-                    <img
-                      className={styles.asideIcon}
-                      src="/images/chek.png"
-                      alt=""
-                    />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(item.project, item.plot)}
-                    style={{ border: "none", backgroundColor: "transparent" }}
-                  >
-                    <img
-                      className={styles.asideIcon}
-                      src="/images/delete.png"
-                      alt=""
-                    />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            userData.map(
+              (item) =>
+                item.status === "Pending" && (
+                  <tr>
+                    <td>{item.name}</td>
+                    <td>{item.addhar} </td>
+                    <td>{item.contact}</td>
+                    <td>{item.plot}</td>
+                    <td>{item.mode}</td>
+                    <td>{item.offer}</td>
+                    <td>
+                      <button
+                        onClick={() => handleApprove(item)}
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                        }}
+                      >
+                        <img
+                          className={styles.asideIcon}
+                          src="/images/chek.png"
+                          alt=""
+                        />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(item.project, item.plot)}
+                        style={{
+                          border: "none",
+                          backgroundColor: "transparent",
+                        }}
+                      >
+                        <img
+                          className={styles.asideIcon}
+                          src="/images/delete.png"
+                          alt=""
+                        />
+                      </button>
+                    </td>
+                  </tr>
+                )
+            )}
         </tbody>
       </table>
     </div>

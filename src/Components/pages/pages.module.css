@@ -17,7 +17,7 @@
 }
 .depositTable{
     width: 100%;
-    height: 120px;
+    height: auto;
     margin-top: 25px;
     padding: 10px;
     background-color: white;
@@ -195,5 +195,47 @@
     .modalDiv{
         width: 80%;
         position: initial;
+    }
+}
+/* Media Query for devices with max-width of 768px (tablets and below) */
+@media screen and (max-width: 768px) {
+    .depositTable {
+        padding: 8px;
+        margin-top: 20px;
+    }
+
+    .depositTable th {
+        padding-left: 2px;
+    }
+    .infoDiv {
+        width: 45vw; 
+        height: auto; 
+        margin: 8px; 
+        padding: 5%; 
+    }
+}
+
+/* Media Query for devices with max-width of 480px (mobile phones) */
+@media screen and (max-width: 480px) {
+    .depositTable {
+        padding: 5px;
+        margin-top: 15px;
+    }
+
+    .depositTable table {
+        font-size: 14px; 
+    }
+
+    .depositTable th {
+        padding-left: 1px;
+    }
+    .infoDiv {
+        width: 90vw; /* Use most of the screen width */
+        height: auto; /* Allow height to adjust based on content */
+        margin: 5px; /* Further reduce margin */
+        padding: 10%; /* Further increase padding for better touch interaction */
+    }
+    .contactInnerDiv{
+        width: 95%;
     }
 }
