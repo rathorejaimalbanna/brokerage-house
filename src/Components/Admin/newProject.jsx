@@ -1,33 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import styles from "./admin.module.css";
-import { doc, setDoc } from "firebase/firestore"; 
-import {db} from "../../firebase.js"
+import { doc, setDoc } from "firebase/firestore";
+import { db, storage } from "../../firebase.js";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
-export default function NewProject() {
-  const [image, setImage] = useState("");
+export default function NewProject(props) {
+  // const [image, setImage] = useState("");
   const [location, setLocation] = useState("");
   const [name, setName] = useState("");
   const [prefix, setPrefix] = useState("");
-  const [totalPlot, setTotal] = useState(0);
+  const [totalPlot, setTotal] = useState();
   const [first, setFirst] = useState(0);
+  const [file, setFile] = useState(null);
+  const [url, setUrl] = useState(null);
 
-  async function uploadProject(obj)
-  {
-// Add a new document in collection "cities"
-  await setDoc(doc(db, "projects", name),obj );
+  async function uploadProject(obj) {
+    // Add a new document in collection "cities"
+    await setDoc(doc(db, "projects", name), obj);
   }
 
   function handleSubmit(event) {
     event.preventDefault(); // Prevent default form submission behavior
-    
+    if (!url) {
+      alert("Please upload a valid image first");
+      return;
+    }
     // Initialize an array to store plot objects
     const array = [];
-    
+
     // Loop to generate plot objects based on totalPlot and first
     for (let i = first; i < totalPlot + first; i++) {
       const plot = {
         id: `${prefix}-${i}`,
-        status: "available"
+        status: "available",
       };
       array.push(plot);
     }
@@ -35,35 +40,121 @@ export default function NewProject() {
     // Create the project object
     const obj = {
       name: name,
-      image: image,
+      image: url,
       location: location,
-      plots: array
+      plots: array,
+      status: props.type || "approved",
     };
-    alert( `New Project ${name} has been added`)
+    alert(
+      props.type
+        ? `New Project ${name} is pending for approval.Once approved will be visible in the project section`
+        : `New Project ${name} has been added`
+    );
     // You can perform further actions with the project object here
     uploadProject(obj);
+    props?.toggleAdd();
   }
-
+  function handleUplaod() {
+    if (!file) {
+      alert("Please select a valid file");
+      return;
+    }
+    const imageRef = ref(storage, `images/${file.name}`);
+    uploadBytes(imageRef, file).then(() =>
+      getDownloadURL(ref(storage, `images/${file.name}`)).then((url) => {
+        setUrl(url);
+      })
+    );
+  }
   return (
     <div>
       <h2 style={{ marginTop: "25px", color: "orangered" }}>Add New Project</h2>
       <div>
+        <h4>Upload Image</h4>
+        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
+        <button onClick={handleUplaod}>Upload</button>
         <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
           <h4>Enter Project Name</h4>
-          <input type="text" required placeholder='Project Name' className={styles.inputField} value={name} onChange={(e) => setName(e.target.value)} />
-          <h4>Input Image Url</h4>
-          <input type="text" required placeholder='Image Url' className={styles.inputField} value={image} onChange={(e) => setImage(e.target.value)} />
+          <input
+            type="text"
+            required
+            placeholder="Project Name"
+            className={props.type ? styles.inputFieldUser : styles.inputField}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          {/* <h4>Input Image Url</h4>
+          <input
+            type="text"
+            required
+            placeholder="Image Url"
+            className={props.type ? styles.inputFieldUser : styles.inputField}
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          /> */}
           <h4>Enter Location</h4>
-          <input type="text" required placeholder='Location' className={styles.inputField} value={location} onChange={(e) => setLocation(e.target.value)} />
+          <input
+            type="text"
+            required
+            placeholder="Location"
+            className={props.type ? styles.inputFieldUser : styles.inputField}
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
           <h4>Provide Plot Name Prefix</h4>
-          <input type="text" placeholder='Prefix for eg-a,e,g' className={styles.inputField} value={prefix} onChange={(e) => setPrefix(e.target.value)} />
+          <input
+            required
+            type="text"
+            placeholder="Prefix for eg-a,e,g"
+            className={props.type ? styles.inputFieldUser : styles.inputField}
+            value={prefix}
+            onChange={(e) => setPrefix(e.target.value)}
+          />
           <h4>Total Number Of Plots</h4>
-          <input type="number" placeholder='Total plots' className={styles.inputField} value={totalPlot} onChange={(e) => setTotal(parseInt(e.target.value))} />
+          <input
+            required
+            type="number"
+            placeholder="Total plots"
+            className={props.type ? styles.inputFieldUser : styles.inputField}
+            value={totalPlot}
+            onChange={(e) => setTotal(parseInt(e.target.value))}
+          />
           <h4>Provide First Plot Number</h4>
-          <input type="number" placeholder='numbering starts from this number, default value is 0' className={styles.inputField} value={first} onChange={(e) => setFirst(parseInt(e.target.value))} />
-          <button type="submit" className={styles.submitButton}>Submit Details</button>
+          <input
+            required
+            type="number"
+            placeholder="numbering starts from this number, default value is 0"
+            className={props.type ? styles.inputFieldUser : styles.inputField}
+            value={first}
+            onChange={(e) => setFirst(parseInt(e.target.value))}
+          />{" "}
+          {props.type && (
+            <>
+              <br />
+              <input
+                style={{ marginRight: "10px", marginTop: "10px" }}
+                required
+                type="checkbox"
+                value="Aggrement"
+              />
+              <label for="vehicle1">
+                Agree all the terms and conditions mentioned{" "}
+                <span style={{ color: "red" }}>here</span>{" "}
+              </label>
+            </>
+          )}
+          <div className={styles.buttonDiv}>
+            <button type="submit" className={styles.submitButton}>
+              Submit Details
+            </button>
+            {props.type && (
+              <button className={styles.cancelButton} onClick={props.toggleAdd}>
+                Cancel
+              </button>
+            )}
+          </div>
         </form>
       </div>
     </div>
-  )
+  );
 }

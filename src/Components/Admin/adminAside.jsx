@@ -85,7 +85,18 @@ export default function AdminAside() {
               src="/images/transfer.png"
               alt=""
             />
-            Tranctions
+            Transactions
+          </li>
+          <li
+            className={styles.uListItem}
+            onClick={() => navigate("projectRequest")}
+          >
+            <img
+              className={styles.asideIcon}
+              src="/images/building.png"
+              alt=""
+            />
+            Project Requests
           </li>
           <li className={styles.uListItem} onClick={() => navigate("/")}>
             <Button>Go To User Panel</Button>

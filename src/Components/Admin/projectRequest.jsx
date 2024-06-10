@@ -1,16 +1,22 @@
-import { addDoc, collection, getDocs, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { doc } from "firebase/firestore";
 import styles from "./admin.module.css";
 import { useNavigate } from "react-router";
 
-export default function WithdrawlRequest() {
+export default function ProjectRequest() {
   const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
 
   async function getRequest() {
-    const querySnapshot = await getDocs(collection(db, "Withdrawl Request"));
+    const querySnapshot = await getDocs(collection(db, "projects"));
 
     const userArray = [];
     querySnapshot.forEach((doc) => {
@@ -19,32 +25,21 @@ export default function WithdrawlRequest() {
     setUserData(userArray);
   }
   async function handleDelete(id) {
-    const washingtonRef = doc(db, "Withdrawl Request", id);
-    var deleteR = window.confirm("Proceed to delete withdrawl request?");
+    var deleteR = window.confirm("Proceed to delete Project request?");
     if (deleteR) {
-      await updateDoc(washingtonRef, {
-        status: "Rejected",
-      });
-      navigate("/admin/withdrawlRequest");
+      await deleteDoc(doc(db, "projects", id));
     }
+    navigate("/admin/projectRequest");
   }
 
-  async function handleApprove(item) {
-    var book = window.confirm("Proceed to confirm booking?");
+  async function handleApprove(id) {
+    var book = window.confirm("Proceed to confirm project request?");
     if (book) {
-      await addDoc(collection(db, "Withdrawl History"), {
-        name: item.name,
-        contact: item.contact,
-        ammount: item.ammount,
-        ifsc: item.bank.ifsc,
-        account: item.bank.account,
-        bank: item.bank.bank,
-      });
-      const washingtonRef = doc(db, "Withdrawl Request", item.ammount);
+      const washingtonRef = doc(db, "projects", id);
       await updateDoc(washingtonRef, {
-        status: "Approved",
+        status: "approved",
       });
-      navigate("/admin/withdrawlRequest");
+      navigate("/admin/projectRequest");
     }
   }
 
@@ -55,29 +50,23 @@ export default function WithdrawlRequest() {
     <div className={styles.userTable}>
       <table>
         <thead>
-          <th>Name</th>
-          <th>Contact</th>
-          <th>Ammount</th>
-          <th>Bank </th>
-          <th>Account No.</th>
-          <th>IFSC</th>
+          <th>Project Name</th>
+          <th>Location</th>
+          <th>Total Plots</th>
           <th>Actions</th>
         </thead>
         <tbody>
           {userData.length > 0 &&
             userData.map(
               (item) =>
-                item.status === "Pending" && (
+                item.status === "user" && (
                   <tr>
                     <td>{item.name}</td>
-                    <td>{item.contact} </td>
-                    <td>{item.ammount}</td>
-                    <td>{item.bank.bank}</td>
-                    <td>{item.bank.account}</td>
-                    <td>{item.bank.ifsc}</td>
+                    <td>{item.location} </td>
+                    <td>{item.plots.length}</td>
                     <td>
                       <button
-                        onClick={() => handleApprove(item)}
+                        onClick={() => handleApprove(item.name)}
                         style={{
                           border: "none",
                           backgroundColor: "transparent",
@@ -90,7 +79,7 @@ export default function WithdrawlRequest() {
                         />
                       </button>
                       <button
-                        onClick={() => handleDelete(item.ammount)}
+                        onClick={() => handleDelete(item.name)}
                         style={{
                           border: "none",
                           backgroundColor: "transparent",

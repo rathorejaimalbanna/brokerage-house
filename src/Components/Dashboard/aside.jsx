@@ -69,23 +69,7 @@ export default function Aside({ side, handleSide }) {
               src="/images/real-estate.png"
               alt=""
             />{" "}
-            My Booking
-          </li>
-          <li
-            className={styles.uListItem}
-            onClick={() => {
-              navigate("tranction");
-              if (side) {
-                handleSide();
-              }
-            }}
-          >
-            <img
-              className={styles.asideIcon}
-              src="/images/transfer.png"
-              alt=""
-            />
-            Tranction
+            My Booking{" "}
           </li>
           <li
             className={styles.uListItem}
@@ -97,12 +81,12 @@ export default function Aside({ side, handleSide }) {
             }}
           >
             <img className={styles.asideIcon} src="/images/coin.png" alt="" />
-            Withdrawl
+            Withdrawl Money
           </li>
           <li
             className={styles.uListItem}
             onClick={() => {
-              navigate("withdrawlHistory");
+              navigate("transaction");
               if (side) {
                 handleSide();
               }
@@ -110,10 +94,10 @@ export default function Aside({ side, handleSide }) {
           >
             <img
               className={styles.asideIcon}
-              src="/images/history.png"
+              src="/images/transfer.png"
               alt=""
             />
-            Withdrawl History
+            Transaction
           </li>
           <li
             className={styles.uListItem}

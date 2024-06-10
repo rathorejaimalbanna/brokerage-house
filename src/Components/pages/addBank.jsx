@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styles from "./pages.module.css";
 import Button from "react-bootstrap/Button";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { useSelector } from "react-redux";
-import { userSelector } from "../../Redux/userReducer/userReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions, userSelector } from "../../Redux/userReducer/userReducer";
 
 export default function AddBank() {
   const { user } = useSelector(userSelector);
@@ -12,6 +12,16 @@ export default function AddBank() {
   const [bank, setBank] = useState();
   const [ifsc, setIfsc] = useState();
   const [holder, setHolder] = useState();
+  const dispatch = useDispatch();
+  async function addUserBank(id) {
+    let bankArr = [...user.bank];
+    bankArr.push(acc);
+    const frankDocRef = doc(db, "userData", user.email);
+    await updateDoc(frankDocRef, {
+      bank: bankArr,
+    });
+    dispatch(userActions.editBank(bankArr));
+  }
   async function handleSubmit(e) {
     e.preventDefault();
     alert("Bank account added successfully");
@@ -23,6 +33,7 @@ export default function AddBank() {
       account: acc,
       ifsc,
     });
+    addUserBank();
   }
   return (
     <>

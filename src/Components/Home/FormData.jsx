@@ -40,6 +40,7 @@ export default function FormData() {
       code,
       booking: [],
       withdrawl: [],
+      bank: [],
     });
   }
 

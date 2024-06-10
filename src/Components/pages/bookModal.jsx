@@ -4,7 +4,7 @@ import styles from "./pages.module.css";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { userSelector } from "../../Redux/userReducer/userReducer";
+import { userActions, userSelector } from "../../Redux/userReducer/userReducer";
 import { projectActions } from "../../Redux/projectReducer/projectReducer";
 
 export default function BookModal(props) {
@@ -15,6 +15,7 @@ export default function BookModal(props) {
   const [mode, setMode] = useState("cash");
   const { user } = useSelector(userSelector);
   const [utr, setUtr] = useState("N/A");
+  let bookingArr = [...user.booking];
   const dispatch = useDispatch();
 
   function handleSelect(eventKey) {
@@ -68,6 +69,8 @@ export default function BookModal(props) {
         projectId: props.projectId,
       })
     );
+    bookingArr.push(props.plotDetail.id);
+    dispatch(userActions.editBooking(bookingArr));
     props.handleClose();
   }
   return (

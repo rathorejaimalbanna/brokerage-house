@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./pages.module.css";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../Redux/userReducer/userReducer";
@@ -20,19 +13,22 @@ export default function Bank() {
   const navigate = useNavigate();
   useEffect(() => {
     async function getDetails() {
-      const q = query(
-        collection(db, "Bank Details"),
-        where("email", "==", user.email)
-      );
-      const querySnapshot = await getDocs(q);
-      var arr = [];
-      querySnapshot.forEach(async (doc) => {
-        arr.push(doc.data());
-      });
-      setData(arr);
+      try {
+        let booking = [...user.bank];
+        let arr = await Promise.all(
+          booking.map(async (ele) => {
+            const docRef = doc(db, "Bank Details", ele);
+            const docSnap = await getDoc(docRef);
+            return docSnap.data();
+          })
+        );
+        setData(arr);
+      } catch {
+        navigate("/");
+      }
     }
     getDetails();
-  }, [user.email]);
+  }, [user.bank, navigate]);
 
   return (
     <>
@@ -66,6 +62,11 @@ export default function Bank() {
           </tbody>
         </table>
       </div>
+      {user.name === "Guest" && (
+        <h2 style={{ textAlign: "center", color: "orangered" }}>
+          Please Login / Signup
+        </h2>
+      )}
     </>
   );
 }

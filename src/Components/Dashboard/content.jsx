@@ -58,7 +58,10 @@ export default function Content() {
           />
           <p>Booked Properties</p>
         </div>
-        <div className={styles.buttonDiv} onClick={() => navigate("tranction")}>
+        <div
+          className={styles.buttonDiv}
+          onClick={() => navigate("transaction")}
+        >
           <img
             className={styles.buttonIcon}
             src="./images/transfer.png"

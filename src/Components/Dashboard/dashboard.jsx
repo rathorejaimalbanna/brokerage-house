@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../../firebase";
+import Waiting from "../pages/waiting";
 import { Outlet, useNavigate } from "react-router";
 import { doc, getDoc } from "firebase/firestore";
 import styles from "./dashboard.module.css";
@@ -14,6 +15,7 @@ export default function Dashboard() {
   const { user } = useSelector(userSelector);
   const navigate = useNavigate();
   const [side, setSide] = useState(false);
+  const [error, setError] = useState(false);
 
   async function fetchDdata(email) {
     const docRef = doc(db, "userData", email);
@@ -32,18 +34,25 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        fetchDdata(user.email);
-      } else {
-        // User is signed out
-        const userDetails = {
-          name: "Guest",
-          email: "guest@gmail.com",
-        };
-        dispatch(userActions.setUser(userDetails));
-      }
-    });
+    try {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          fetchDdata(user.email);
+        } else {
+          // User is signed out
+          const userDetails = {
+            name: "Guest",
+            email: "guest@gmail.com",
+            booking: [],
+            withdrawl: [],
+            bank: [],
+          };
+          dispatch(userActions.setUser(userDetails));
+        }
+      });
+    } catch {
+      setError(true);
+    }
   }, [dispatch]);
 
   function handleLogin() {
@@ -52,7 +61,9 @@ export default function Dashboard() {
   function handleSide() {
     setSide(!side);
   }
-
+  if (error) {
+    return <Waiting />;
+  }
   return (
     <div className={styles.mainDiv}>
       <div className={styles.asideDiv}>

@@ -4,6 +4,7 @@ import styles from "./pages.module.css";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   setDoc,
@@ -11,8 +12,8 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { useSelector } from "react-redux";
-import { userSelector } from "../../Redux/userReducer/userReducer";
+import { useDispatch, useSelector } from "react-redux";
+import { userActions, userSelector } from "../../Redux/userReducer/userReducer";
 
 export default function AddWithdrawlRequest(props) {
   const { user } = useSelector(userSelector);
@@ -22,22 +23,24 @@ export default function AddWithdrawlRequest(props) {
   const [bank, setBank] = useState("");
   const [data, setData] = useState([]);
   const [showName, setShowName] = useState("");
+  const dispatch = useDispatch();
+  let withdrawlArr = [...user.withdrawl];
 
   useEffect(() => {
     async function getDetails() {
-      const q = query(
-        collection(db, "Bank Details"),
-        where("email", "==", user.email)
+      let booking = [...user.bank];
+      let arr = await Promise.all(
+        booking.map(async (ele) => {
+          const docRef = doc(db, "Bank Details", ele);
+          const docSnap = await getDoc(docRef);
+          return docSnap.data();
+        })
       );
-      const querySnapshot = await getDocs(q);
-      var arr = [];
-      querySnapshot.forEach(async (doc) => {
-        arr.push(doc.data());
-      });
       setData(arr);
     }
+
     getDetails();
-  }, [user.email]);
+  }, [user.bank]);
 
   function handleSelect(eventKey) {
     const json = JSON.parse(eventKey);
@@ -60,7 +63,7 @@ export default function AddWithdrawlRequest(props) {
     withdrawlArr.push(ammount);
     const frankDocRef = doc(db, "userData", user.email);
     await updateDoc(frankDocRef, {
-      booking: withdrawlArr,
+      withdrawl: withdrawlArr,
     });
   }
   async function handleSubmit(e) {
@@ -68,6 +71,8 @@ export default function AddWithdrawlRequest(props) {
     alert("Request Sent for withdrawl");
     addBooking();
     addUserWithdrawl();
+    withdrawlArr.push(ammount);
+    dispatch(userActions.editWithdrawl(withdrawlArr));
     props.handleClose();
   }
   return (

@@ -4,25 +4,31 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../Redux/userReducer/userReducer";
+import { useNavigate } from "react-router";
 
 export default function Booking() {
   const { user } = useSelector(userSelector);
   const [plots, setPlots] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     async function getDetails() {
-      let booking = [...user.booking];
-      let arr = await Promise.all(
-        booking.map(async (ele) => {
-          const docRef = doc(db, "Booking Request", ele);
-          const docSnap = await getDoc(docRef);
-          return docSnap.data();
-        })
-      );
-      setPlots(arr);
+      try {
+        let booking = [...user.booking];
+        let arr = await Promise.all(
+          booking.map(async (ele) => {
+            const docRef = doc(db, "Booking Request", ele);
+            const docSnap = await getDoc(docRef);
+            return docSnap.data();
+          })
+        );
+        setPlots(arr);
+      } catch {
+        navigate("/");
+      }
     }
 
     getDetails();
-  }, [user.booking]);
+  }, [navigate, user.booking]);
 
   return (
     <>
@@ -48,6 +54,11 @@ export default function Booking() {
             ))}
         </table>
       </div>
+      {user.name === "Guest" && (
+        <h2 style={{ textAlign: "center", color: "orangered" }}>
+          Please Login / Signup
+        </h2>
+      )}
     </>
   );
 }
