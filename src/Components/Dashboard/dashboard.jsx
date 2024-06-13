@@ -46,6 +46,8 @@ export default function Dashboard() {
             booking: [],
             withdrawl: [],
             bank: [],
+            link: "",
+            sponser: "Brokerage House",
           };
           dispatch(userActions.setUser(userDetails));
         }
