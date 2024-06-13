@@ -2,9 +2,13 @@ import React from "react";
 import styles from "./dashboard.module.css";
 import CopyButton from "./refrral";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../Redux/userReducer/userReducer";
 
 export default function Content() {
   const navigate = useNavigate();
+  const { user } = useSelector(userSelector);
+
   return (
     <>
       <div className={styles.refrralDiv}>
@@ -12,13 +16,13 @@ export default function Content() {
           <p>Prospect Link</p>
         </div>
         <div>
-          <CopyButton text="BrokersHouse/Prospect/link/r34cc1" />
+          <CopyButton text={`brokerage-house.web.app/home/${user.link}`} />
         </div>
       </div>
       <div className={styles.sponserDiv}>
         <div className={styles.infoDiv}>
           <h5>Sponsor By</h5>
-          <p>Mr. Jai Rathore</p>
+          <p>{user.sponser}</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Wallet Balance</h5>

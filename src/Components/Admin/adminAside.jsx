@@ -3,7 +3,7 @@ import styles from "./admin.module.css";
 import { useNavigate } from "react-router";
 import Button from "react-bootstrap/Button";
 
-export default function AdminAside() {
+export default function AdminAside({ side, handleSide }) {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +13,15 @@ export default function AdminAside() {
       </div>
       <div className={styles.asideList}>
         <ul className={styles.uList}>
-          <li className={styles.uListItem} onClick={() => navigate("/admin")}>
+          <li
+            className={styles.uListItem}
+            onClick={() => {
+              navigate("/admin");
+              if (side) {
+                handleSide();
+              }
+            }}
+          >
             <img
               className={styles.asideIcon}
               src="/images/dashboard.png"
@@ -23,7 +31,12 @@ export default function AdminAside() {
           </li>
           <li
             className={styles.uListItem}
-            onClick={() => navigate("addProject")}
+            onClick={() => {
+              navigate("addProject");
+              if (side) {
+                handleSide();
+              }
+            }}
           >
             <img
               className={styles.asideIcon}
@@ -32,20 +45,38 @@ export default function AdminAside() {
             />
             Manage Project
           </li>
-          <li className={styles.uListItem} onClick={() => navigate("kyc")}>
+          <li
+            className={styles.uListItem}
+            onClick={() => {
+              navigate("kyc");
+              if (side) {
+                handleSide();
+              }
+            }}
+          >
             <img className={styles.asideIcon} src="/images/admin.png" alt="" />{" "}
             User Details
           </li>
           <li
             className={styles.uListItem}
-            onClick={() => navigate("userAccounts")}
+            onClick={() => {
+              navigate("userAccounts");
+              if (side) {
+                handleSide();
+              }
+            }}
           >
             <img className={styles.asideIcon} src="/images/bank.png" alt="" />
             User Bank Accounts
           </li>
           <li
             className={styles.uListItem}
-            onClick={() => navigate("bookingRequest")}
+            onClick={() => {
+              navigate("bookingRequest");
+              if (side) {
+                handleSide();
+              }
+            }}
           >
             <img
               className={styles.asideIcon}
@@ -54,13 +85,26 @@ export default function AdminAside() {
             />
             Booking Requests
           </li>
-          <li className={styles.uListItem} onClick={() => navigate("prospect")}>
+          {/* <li
+            className={styles.uListItem}
+            onClick={() => {
+              navigate("prospect");
+              if (side) {
+                handleSide();
+              }
+            }}
+          >
             <img className={styles.asideIcon} src="/images/bonus.png" alt="" />
             Manage Prospects
-          </li>
+          </li> */}
           <li
             className={styles.uListItem}
-            onClick={() => navigate("bookingHistory")}
+            onClick={() => {
+              navigate("bookingHistory");
+              if (side) {
+                handleSide();
+              }
+            }}
           >
             <img
               className={styles.asideIcon}
@@ -71,14 +115,24 @@ export default function AdminAside() {
           </li>
           <li
             className={styles.uListItem}
-            onClick={() => navigate("withdrawlRequest")}
+            onClick={() => {
+              navigate("withdrawlRequest");
+              if (side) {
+                handleSide();
+              }
+            }}
           >
             <img className={styles.asideIcon} src="/images/coin.png" alt="" />
             Withdrawl Requests
           </li>
           <li
             className={styles.uListItem}
-            onClick={() => navigate("tranction")}
+            onClick={() => {
+              navigate("tranction");
+              if (side) {
+                handleSide();
+              }
+            }}
           >
             <img
               className={styles.asideIcon}
@@ -89,7 +143,12 @@ export default function AdminAside() {
           </li>
           <li
             className={styles.uListItem}
-            onClick={() => navigate("projectRequest")}
+            onClick={() => {
+              navigate("projectRequest");
+              if (side) {
+                handleSide();
+              }
+            }}
           >
             <img
               className={styles.asideIcon}
@@ -98,7 +157,15 @@ export default function AdminAside() {
             />
             Project Requests
           </li>
-          <li className={styles.uListItem} onClick={() => navigate("/")}>
+          <li
+            className={styles.uListItem}
+            onClick={() => {
+              navigate("/");
+              if (side) {
+                handleSide();
+              }
+            }}
+          >
             <Button>Go To User Panel</Button>
           </li>
         </ul>

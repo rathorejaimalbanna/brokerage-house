@@ -1,10 +1,4 @@
-import {
-  addDoc,
-  collection,
-  deleteDoc,
-  getDocs,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, deleteDoc, getDocs, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { doc } from "firebase/firestore";
@@ -50,8 +44,11 @@ export default function ProjectRequest() {
     <div className={styles.userTable}>
       <table>
         <thead>
+          <th>Project Type</th>
           <th>Project Name</th>
+          <th>Price</th>
           <th>Location</th>
+          <th>Size</th>
           <th>Total Plots</th>
           <th>Actions</th>
         </thead>
@@ -61,9 +58,13 @@ export default function ProjectRequest() {
               (item) =>
                 item.status === "user" && (
                   <tr>
+                    <td>{item.type}</td>
                     <td>{item.name}</td>
+                    <td>{item.price}</td>
                     <td>{item.location} </td>
+                    <td>{item.size}</td>
                     <td>{item.plots.length}</td>
+
                     <td>
                       <button
                         onClick={() => handleApprove(item.name)}

@@ -1,43 +1,59 @@
-import React, { useEffect, useState } from "react";
-import styles from "./pages.module.css";
-import ProjectCard from "./card";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
 import {
   projectActions,
   projectSelectors,
 } from "../../Redux/projectReducer/projectReducer";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../firebase";
+import ProjectCard from "./card";
 import NewProject from "../Admin/newProject";
+import styles from "./pages.module.css";
 
 export default function Project() {
   const dispatch = useDispatch();
   const [addProject, setAddProject] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     async function getData() {
-      const querySnapshot = await getDocs(collection(db, "projects"));
-      // const data = querySnapshot.map((doc)=> doc.data())
-      const userArray = [];
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        userArray.push({ ...doc.data() });
-      });
-      dispatch(projectActions.loadProject(userArray));
+      try {
+        const querySnapshot = await getDocs(collection(db, "projects"));
+        const userArray = querySnapshot.docs.map((doc) => ({
+          id: doc.id, // Ensure unique identifier
+          ...doc.data(),
+        }));
+        dispatch(projectActions.loadProject(userArray));
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      }
     }
     getData();
   }, [dispatch]);
-  function toggleAdd() {
-    setAddProject(!addProject);
-  }
+
+  const toggleAdd = useCallback(() => {
+    setAddProject((prevAddProject) => !prevAddProject);
+  }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
 
   const loadedProjects = useSelector(projectSelectors);
+
+  // Filter projects based on search term and project status
+  const filteredProjects = useMemo(() => {
+    return loadedProjects.filter(
+      (project) =>
+        project.status === "approved" &&
+        project.location?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [loadedProjects, searchTerm]);
 
   return (
     <>
       {addProject && (
         <div className={styles.modalContainer}>
-          {" "}
           <div className={styles.modalDiv}>
             <NewProject type="user" toggleAdd={toggleAdd} />
           </div>
@@ -55,14 +71,24 @@ export default function Project() {
         </button>
       </div>
 
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Search by location"
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className={styles.searchInput}
+        />
+      </div>
+
       <div className={styles.cardContainer}>
-        {loadedProjects.length > 0 &&
-          loadedProjects.map(
-            (item, id) =>
-              item.status === "approved" && (
-                <ProjectCard type="project" key={id} id={id} project={item} />
-              )
-          )}
+        {filteredProjects.length > 0 ? (
+          filteredProjects.map((item, id) => (
+            <ProjectCard type="project" key={id} id={id} project={item} />
+          ))
+        ) : (
+          <p>No projects found.</p>
+        )}
       </div>
     </>
   );

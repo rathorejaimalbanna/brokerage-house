@@ -3,6 +3,7 @@ import styles from "./admin.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 export default function NewProject(props) {
   // const [image, setImage] = useState("");
@@ -13,6 +14,9 @@ export default function NewProject(props) {
   const [first, setFirst] = useState(0);
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
+  const [type, setType] = useState(null);
+  const [size, setSize] = useState(0);
+  const [price, setPrice] = useState(0);
 
   async function uploadProject(obj) {
     // Add a new document in collection "cities"
@@ -44,6 +48,9 @@ export default function NewProject(props) {
       location: location,
       plots: array,
       status: props.type || "approved",
+      type,
+      price,
+      size,
     };
     alert(
       props.type
@@ -66,6 +73,9 @@ export default function NewProject(props) {
       })
     );
   }
+  function handleSelect(eventKey) {
+    setType(eventKey);
+  }
   return (
     <div>
       <h2 style={{ marginTop: "25px", color: "orangered" }}>Add New Project</h2>
@@ -83,15 +93,18 @@ export default function NewProject(props) {
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          {/* <h4>Input Image Url</h4>
-          <input
-            type="text"
-            required
-            placeholder="Image Url"
-            className={props.type ? styles.inputFieldUser : styles.inputField}
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          /> */}
+          {/* <h5>Select Property Type</h5> */}
+          <DropdownButton
+            id="dropdown-button"
+            title={type || "Select Property Type"}
+            onSelect={handleSelect}
+            style={{ marginTop: "10px" }}
+          >
+            <Dropdown.Item eventKey={"Villa"}>Villa</Dropdown.Item>
+            <Dropdown.Item eventKey={"Colony"}>Colony</Dropdown.Item>
+            <Dropdown.Item eventKey={"Flat"}>Flat</Dropdown.Item>
+            <Dropdown.Item eventKey={"Duplex"}>Duplex</Dropdown.Item>
+          </DropdownButton>
           <h4>Enter Location</h4>
           <input
             type="text"
@@ -101,33 +114,66 @@ export default function NewProject(props) {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
-          <h4>Provide Plot Name Prefix</h4>
-          <input
-            required
-            type="text"
-            placeholder="Prefix for eg-a,e,g"
-            className={props.type ? styles.inputFieldUser : styles.inputField}
-            value={prefix}
-            onChange={(e) => setPrefix(e.target.value)}
-          />
-          <h4>Total Number Of Plots</h4>
-          <input
-            required
-            type="number"
-            placeholder="Total plots"
-            className={props.type ? styles.inputFieldUser : styles.inputField}
-            value={totalPlot}
-            onChange={(e) => setTotal(parseInt(e.target.value))}
-          />
-          <h4>Provide First Plot Number</h4>
-          <input
-            required
-            type="number"
-            placeholder="numbering starts from this number, default value is 0"
-            className={props.type ? styles.inputFieldUser : styles.inputField}
-            value={first}
-            onChange={(e) => setFirst(parseInt(e.target.value))}
-          />{" "}
+          {type === "Colony" && (
+            <>
+              <h4>Provide Plot Name Prefix</h4>
+              <input
+                type="text"
+                placeholder="Prefix for eg-a,e,g (Optional)"
+                className={
+                  props.type ? styles.inputFieldUser : styles.inputField
+                }
+                value={prefix}
+                onChange={(e) => setPrefix(e.target.value)}
+              />
+              <h4>Total Number Of Plots</h4>
+              <input
+                type="number"
+                placeholder="Total plots (Optional)"
+                className={
+                  props.type ? styles.inputFieldUser : styles.inputField
+                }
+                value={totalPlot}
+                onChange={(e) => setTotal(parseInt(e.target.value))}
+              />
+              <h4>Provide First Plot Number</h4>
+              <input
+                type="number"
+                placeholder="numbering starts from this number, default value is 0"
+                className={
+                  props.type ? styles.inputFieldUser : styles.inputField
+                }
+                value={first}
+                onChange={(e) => setFirst(parseInt(e.target.value))}
+              />
+            </>
+          )}{" "}
+          {type !== "Colony" && (
+            <>
+              <h4>Provide property size</h4>
+              <input
+                required
+                type="text"
+                placeholder="Prefix for eg-a,e,g (Optional)"
+                className={
+                  props.type ? styles.inputFieldUser : styles.inputField
+                }
+                value={size}
+                onChange={(e) => setSize(e.target.value)}
+              />
+              <h4>Provide property price</h4>
+              <input
+                required
+                type="text"
+                placeholder="Enter Price"
+                className={
+                  props.type ? styles.inputFieldUser : styles.inputField
+                }
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+              />
+            </>
+          )}
           {props.type && (
             <>
               <br />

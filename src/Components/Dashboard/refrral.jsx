@@ -5,7 +5,8 @@ function CopyButton({ text }) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(text);
+    let newText = "https://" + text;
+    navigator.clipboard.writeText(newText);
     setCopied(true);
     setTimeout(() => {
       setCopied(false);

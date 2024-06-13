@@ -58,6 +58,7 @@ export default function App() {
       ],
     },
     { path: "home", element: <Home /> },
+    { path: "home/:prospect", element: <Home prospect={"prospect"} /> },
     { path: "reset", element: <ResetPas /> },
     {
       path: "admin",

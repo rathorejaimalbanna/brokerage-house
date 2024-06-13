@@ -151,7 +151,7 @@
 .modalDiv{
     position: fixed;
     min-width: 23%;
-    top: 50px;
+    top: 20px;
     left: 30vw;
     border: 2px solid black;
     z-index: 5;
@@ -200,7 +200,12 @@
     height: 20px;
     margin-right: 10px;
   }
-
+.searchContainer input{
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 200px;
+    padding-left: 10px;
+}
 
   /* Media Queries */
 

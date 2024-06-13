@@ -85,6 +85,7 @@ export default function BookingRequest() {
           <th>Contact</th>
           <th>Plot No.</th>
           <th>Payment Mode</th>
+          <th>Utr</th>
           <th>Ammount</th>
           <th>Actions</th>
         </thead>
@@ -99,6 +100,7 @@ export default function BookingRequest() {
                     <td>{item.contact}</td>
                     <td>{item.plot}</td>
                     <td>{item.mode}</td>
+                    <td>{item.utr}</td>
                     <td>{item.offer}</td>
                     <td>
                       <button
