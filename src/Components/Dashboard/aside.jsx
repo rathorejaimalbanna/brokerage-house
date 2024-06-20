@@ -113,7 +113,7 @@ export default function Aside({ side, handleSide }) {
               src="/images/network.png"
               alt=""
             />
-            My Prospect
+            My Referral
           </li>
           <li
             className={styles.uListItem}
@@ -125,7 +125,7 @@ export default function Aside({ side, handleSide }) {
             }}
           >
             <img className={styles.asideIcon} src="/images/bonus.png" alt="" />
-            Prospect Bonus
+            Referral Bonus
           </li>
           <li
             className={styles.uListItem}

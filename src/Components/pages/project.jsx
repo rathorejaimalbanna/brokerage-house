@@ -46,7 +46,9 @@ export default function Project() {
     return loadedProjects.filter(
       (project) =>
         project.status === "approved" &&
-        project.location?.toLowerCase().includes(searchTerm.toLowerCase())
+        project.location
+          ?.toLowerCase()
+          .includes(searchTerm.trim().toLowerCase())
     );
   }, [loadedProjects, searchTerm]);
 

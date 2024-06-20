@@ -119,7 +119,7 @@ export default function BookModal(props) {
             required
             onChange={(e) => setOffer(e.target.value)}
             type="number"
-            placeholder="ACC. NO."
+            placeholder="Enter Ammount "
             className={styles.inputFieldModal}
           />
           <h5>Provide Addhar Number</h5>

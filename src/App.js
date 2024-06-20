@@ -32,6 +32,12 @@ import BookingHistory from "./Components/Admin/bookingHistory";
 import WithdrawlRequest from "./Components/Admin/withdrawlRequests";
 import Transaction from "./Components/pages/withdrawlHistory";
 import ProjectRequest from "./Components/Admin/projectRequest";
+import SecondAuth from "./Components/pages/secondAuth";
+import VillaProject from "./Components/Dashboard/villaProject";
+import FlatProject from "./Components/Dashboard/villaProject";
+import ShopProject from "./Components/Dashboard/villaProject";
+import FarmProject from "./Components/Dashboard/villaProject";
+import PlotProject from "./Components/Dashboard/villaProject";
 
 // App component responsible for routing and rendering different pages
 export default function App() {
@@ -55,11 +61,17 @@ export default function App() {
         { path: "terms", element: <Terms /> },
         { path: "about", element: <About /> },
         { path: "addBank", element: <AddBank /> },
+        { path: "villaProject", element: <VillaProject /> },
+        { path: "farmProject", element: <FarmProject /> },
+        { path: "flatProject", element: <FlatProject /> },
+        { path: "plotProject", element: <PlotProject /> },
+        { path: "shopProject", element: <ShopProject /> },
       ],
     },
     { path: "home", element: <Home /> },
     { path: "home/:prospect", element: <Home prospect={"prospect"} /> },
     { path: "reset", element: <ResetPas /> },
+    { path: "secondAuth/:email", element: <SecondAuth /> },
     {
       path: "admin",
       element: <Admin />,

@@ -300,6 +300,11 @@
   .sideButton{
     display: none;
 }
+.upImg{
+    object-fit: contain;
+    height: 20px;
+    margin-right: 5px;
+}
 /* Media Query for devices with max-width of 768px (tablets and below) */
 @media screen and (max-width: 768px) {
     .mainDiv {

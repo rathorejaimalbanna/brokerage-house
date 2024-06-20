@@ -1,19 +1,32 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styles from "./dashboard.module.css";
 import CopyButton from "./refrral";
 import { useNavigate } from "react-router";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../Redux/userReducer/userReducer";
+import SelectType from "./selectType";
 
 export default function Content() {
   const navigate = useNavigate();
   const { user } = useSelector(userSelector);
+  const [addProject, setAddProject] = useState(false);
+  const toggleAdd = useCallback(() => {
+    setAddProject((prevAddProject) => !prevAddProject);
+  }, []);
 
   return (
     <>
+      {" "}
+      {addProject && (
+        <div className={styles.modalContainer}>
+          <div className={styles.modalDiv}>
+            <SelectType type="user" toggleAdd={toggleAdd} />
+          </div>
+        </div>
+      )}
       <div className={styles.refrralDiv}>
         <div>
-          <p>Prospect Link</p>
+          <p>Referral Link</p>
         </div>
         <div>
           <CopyButton text={`brokerage-house.web.app/home/${user.link}`} />
@@ -33,13 +46,21 @@ export default function Content() {
           <p>&#8377; 0</p>
         </div>
         <div className={styles.infoDiv}>
-          <h5>Total Prospect Bonous</h5>
+          <h5>Total Referral Bonous</h5>
           <p>&#8377; 11000</p>
         </div>
         <div className={styles.infoDiv}>
-          <h5>Last Prospect Bonous</h5>
+          <h5>Last Referral Bonous</h5>
           <p>&#8377; 0</p>
         </div>
+        <button
+          style={{ border: "none" }}
+          className={styles.infoDiv}
+          onClick={() => toggleAdd()}
+        >
+          <h5>Add Project</h5>
+          <p style={{ fontSize: "large" }}>(click here to add your Project)</p>
+        </button>
       </div>
       <div className={styles.sponserDiv}>
         <div className={styles.buttonDiv} onClick={() => navigate("project")}>
@@ -83,7 +104,7 @@ export default function Content() {
         </div>
         <div className={styles.buttonDiv} onClick={() => navigate("bonus")}>
           <img className={styles.buttonIcon} src="./images/bonus.png" alt="" />
-          <p>Prospect Bonus</p>
+          <p>Referral Bonus</p>
         </div>
         <div className={styles.buttonDiv} onClick={() => navigate("contact")}>
           <img

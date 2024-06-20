@@ -26,7 +26,7 @@ function ProjectCard(props) {
   }
 
   function handleProject() {
-    navigate(`${props.id}`);
+    navigate(`${props.project.name}`);
   }
   return (
     <Card style={{ width: "25rem" }}>

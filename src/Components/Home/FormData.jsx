@@ -89,6 +89,8 @@ export default function FormData({ isLink }) {
       sponser: newSponser,
       sponserEmail: newSponserEmail,
       link,
+      bonus: 11000,
+      firstSale: false,
     });
   }
 
@@ -106,7 +108,7 @@ export default function FormData({ isLink }) {
         setError("Email address already in use");
       });
     setTimeout(() => {
-      navigate("/");
+      navigate(`/secondAuth/${email}`);
     }, 1200);
   }
 

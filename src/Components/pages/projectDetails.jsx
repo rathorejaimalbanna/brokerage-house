@@ -7,12 +7,16 @@ import BookModal from "./bookModal";
 import PlotDetails from "./plotDetails";
 
 export default function ProjectDetails() {
-  const params = useParams();
   const [show, setShow] = useState(false);
   const [plotInfo, setPlotInfo] = useState(false);
   const [plotModalDetail, setModalDetail] = useState({});
+  const params = useParams();
   const loadedProjects = useSelector(projectSelectors);
-  const project = loadedProjects[params.id];
+  const listProject = loadedProjects.filter(
+    (pro, id) => pro.name === params.id
+  );
+  const project = listProject[0];
+  const projectId = loadedProjects.indexOf(project);
   function handleShow() {
     setShow(true);
     setPlotInfo(false);
@@ -51,7 +55,7 @@ export default function ProjectDetails() {
             {" "}
             <div className={styles.modalDiv}>
               <BookModal
-                projectId={params.id}
+                projectId={projectId}
                 project={project}
                 plotDetail={plotModalDetail}
                 handleClose={handleClose}
@@ -64,7 +68,7 @@ export default function ProjectDetails() {
             {project.name}
           </h1>
           <img className={styles.projectImg} src={project.image} alt="" />
-          <div style={{ marginTop: "25px" }}>
+          <div style={{ marginTop: "20px" }}>
             <h3>Indications: </h3>
             <div style={{ display: "flex", justifyContent: "space-evenly" }}>
               <p>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styles from "./admin.module.css";
+import styles from "../Admin/admin.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
-export default function NewProject(props) {
+export default function PlotProject(props) {
   // const [image, setImage] = useState("");
   const [location, setLocation] = useState("");
   const [name, setName] = useState("");
@@ -86,7 +86,7 @@ export default function NewProject(props) {
           className={styles.upImg}
           src={url ? "/images/upload.png" : "/images/remove.png"}
           alt=""
-        />
+        />{" "}
         <button onClick={handleUplaod}>Upload</button>
         <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
           <h4>Enter Project Name</h4>
