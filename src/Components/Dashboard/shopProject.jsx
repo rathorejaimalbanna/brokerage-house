@@ -8,19 +8,19 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 export default function ShopProject(props) {
   // const [image, setImage] = useState("");
   const [location, setLocation] = useState("");
-  const [name, setName] = useState("");
-  const [prefix, setPrefix] = useState("");
-  const [totalPlot, setTotal] = useState();
-  const [first, setFirst] = useState(0);
+  const [name, setName] = useState("Shop No.");
   const [file, setFile] = useState(null);
   const [url, setUrl] = useState(null);
-  const [type, setType] = useState(null);
-  const [size, setSize] = useState(0);
-  const [price, setPrice] = useState(0);
-
+  const [size, setSize] = useState();
+  const [price, setPrice] = useState();
+  const [sizeType, setSizeType] = useState();
+  const [road, setRoad] = useState();
+  const [dimention, setDimention] = useState();
+  const [direction, setDirection] = useState();
+  const [contact, setContact] = useState();
   async function uploadProject(obj) {
     // Add a new document in collection "cities"
-    await setDoc(doc(db, "projects", name), obj);
+    await setDoc(doc(db, "userProjects", name), obj);
   }
 
   function handleSubmit(event) {
@@ -29,37 +29,27 @@ export default function ShopProject(props) {
       alert("Please select a valid image and click upload");
       return;
     }
-    // Initialize an array to store plot objects
-    const array = [];
-
-    // Loop to generate plot objects based on totalPlot and first
-    for (let i = first; i < totalPlot + first; i++) {
-      const plot = {
-        id: `${prefix}-${i}`,
-        status: "available",
-      };
-      array.push(plot);
-    }
 
     // Create the project object
     const obj = {
       name: name,
+      contact,
       image: url,
-      location: location,
-      plots: array,
-      status: props.type || "approved",
-      type,
+      location,
+      status: "pending",
+      type: "Shop",
       price,
+      sizeType,
       size,
+      dimention,
+      direction,
+      road,
     };
     alert(
-      props.type
-        ? `New Project ${name} is pending for approval.Once approved will be visible in the project section`
-        : `New Project ${name} has been added`
+      `New Project ${name} is pending for approval.Once approved will be visible in the project section`
     );
     // You can perform further actions with the project object here
     uploadProject(obj);
-    props?.toggleAdd();
   }
   function handleUplaod() {
     if (!file) {
@@ -73,12 +63,16 @@ export default function ShopProject(props) {
       })
     );
   }
-  function handleSelect(eventKey) {
-    setType(eventKey);
+
+  function handleSize(eventKey) {
+    setSizeType(eventKey);
   }
+
   return (
     <div>
-      <h2 style={{ marginTop: "25px", color: "orangered" }}>Add New Project</h2>
+      <h2 style={{ marginTop: "25px", color: "orangered" }}>
+        New Shop Project
+      </h2>
       <div>
         <h4>Upload Image</h4>
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
@@ -89,111 +83,100 @@ export default function ShopProject(props) {
         />
         <button onClick={handleUplaod}>Upload</button>
         <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
-          <h4>Enter Project Name</h4>
+          <h4>Enter Your Contact Details</h4>
+          <input
+            type="number"
+            required
+            placeholder="Contact Details"
+            className={styles.inputField}
+            value={contact}
+            onChange={(e) => setContact(e.target.value)}
+          />
+          <h4>Enter Shop Number</h4>
           <input
             type="text"
             required
-            placeholder="Project Name"
-            className={props.type ? styles.inputFieldUser : styles.inputField}
+            placeholder="Project Name(Shop Number)"
+            className={styles.inputField}
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
-          {/* <h5>Select Property Type</h5> */}
-          <DropdownButton
-            id="dropdown-button"
-            title={type || "Select Property Type"}
-            onSelect={handleSelect}
-            style={{ marginTop: "10px" }}
-          >
-            <Dropdown.Item eventKey={"Villa"}>Villa</Dropdown.Item>
-            <Dropdown.Item eventKey={"Colony"}>Colony</Dropdown.Item>
-            <Dropdown.Item eventKey={"Flat"}>Flat</Dropdown.Item>
-            <Dropdown.Item eventKey={"Duplex"}>Duplex</Dropdown.Item>
-          </DropdownButton>
           <h4>Enter Location</h4>
           <input
             type="text"
             required
             placeholder="Location"
-            className={props.type ? styles.inputFieldUser : styles.inputField}
+            className={styles.inputField}
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
-          {type === "Colony" && (
-            <>
-              <h4>Provide Plot Name Prefix</h4>
-              <input
-                type="text"
-                placeholder="Prefix for eg-a,e,g (Optional)"
-                className={
-                  props.type ? styles.inputFieldUser : styles.inputField
-                }
-                value={prefix}
-                onChange={(e) => setPrefix(e.target.value)}
-              />
-              <h4>Total Number Of Plots</h4>
-              <input
-                type="number"
-                placeholder="Total plots (Optional)"
-                className={
-                  props.type ? styles.inputFieldUser : styles.inputField
-                }
-                value={totalPlot}
-                onChange={(e) => setTotal(parseInt(e.target.value))}
-              />
-              <h4>Provide First Plot Number</h4>
-              <input
-                type="number"
-                placeholder="numbering starts from this number, default value is 0"
-                className={
-                  props.type ? styles.inputFieldUser : styles.inputField
-                }
-                value={first}
-                onChange={(e) => setFirst(parseInt(e.target.value))}
-              />
-            </>
-          )}{" "}
-          {type !== "Colony" && (
-            <>
-              <h4>Provide property size</h4>
-              <input
-                required
-                type="text"
-                placeholder="Prefix for eg-a,e,g (Optional)"
-                className={
-                  props.type ? styles.inputFieldUser : styles.inputField
-                }
-                value={size}
-                onChange={(e) => setSize(e.target.value)}
-              />
-              <h4>Provide property price</h4>
-              <input
-                required
-                type="text"
-                placeholder="Enter Price"
-                className={
-                  props.type ? styles.inputFieldUser : styles.inputField
-                }
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              />
-            </>
-          )}
-          {props.type && (
-            <>
-              <br />
-              <input
-                style={{ marginRight: "10px", marginTop: "10px" }}
-                required
-                type="checkbox"
-                value="Aggrement"
-              />
-              <label for="vehicle1">
-                Agree all the terms and conditions mentioned{" "}
-                <span style={{ color: "red" }}>here</span>{" "}
-              </label>
-            </>
-          )}
+          <h4>Provide Shop size</h4>
+          <DropdownButton
+            id="dropdown-button"
+            title={sizeType || "Select size measurment unit"}
+            onSelect={handleSize}
+            style={{ marginTop: "10px" }}
+          >
+            <Dropdown.Item eventKey={"Sq. Feet"}>Sq. Feet</Dropdown.Item>
+            <Dropdown.Item eventKey={"Sq. Yard"}>Sq. Yards</Dropdown.Item>
+          </DropdownButton>
+          <input
+            style={{ marginTop: "10px" }}
+            required
+            type="number"
+            placeholder="Size in selected dimentions"
+            className={styles.inputField}
+            value={size}
+            onChange={(e) => setSize(e.target.value)}
+          />
+          <h4>Front Road Size in feets</h4>
+          <input
+            required
+            type="number"
+            placeholder="Enter road size"
+            className={styles.inputField}
+            value={road}
+            onChange={(e) => setRoad(e.target.value)}
+          />
+          <h4>Shop Dimensions</h4>
+          <input
+            required
+            type="text"
+            placeholder="Enter dimentions"
+            className={styles.inputField}
+            value={dimention}
+            onChange={(e) => setDimention(e.target.value)}
+          />
+          <h4>Facing Direction</h4>
+          <input
+            required
+            type="text"
+            placeholder="Enter direction"
+            className={styles.inputField}
+            value={direction}
+            onChange={(e) => setDirection(e.target.value)}
+          />
+          <h4> Demand price</h4>
+          <input
+            required
+            type="number"
+            placeholder="Enter Price"
+            className={styles.inputField}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+
+          <br />
+          <input
+            style={{ marginRight: "10px", marginTop: "10px" }}
+            required
+            type="checkbox"
+            value="Aggrement"
+          />
+          <label for="vehicle1">
+            Agree all the terms and conditions mentioned{" "}
+            <span style={{ color: "red" }}>here</span>{" "}
+          </label>
           <div className={styles.buttonDiv}>
             <button type="submit" className={styles.submitButton}>
               Submit Details

@@ -29,6 +29,7 @@ export default function AdminAside({ side, handleSide }) {
             />{" "}
             Dashboard
           </li>
+
           <li
             className={styles.uListItem}
             onClick={() => {
@@ -43,7 +44,23 @@ export default function AdminAside({ side, handleSide }) {
               src="/images/project-management.png"
               alt=""
             />
-            Manage Project
+            Manage Projects
+          </li>
+          <li
+            className={styles.uListItem}
+            onClick={() => {
+              navigate("manageUserProject");
+              if (side) {
+                handleSide();
+              }
+            }}
+          >
+            <img
+              className={styles.asideIcon}
+              src="/images/project-management.png"
+              alt=""
+            />
+            Manage User Projects
           </li>
           <li
             className={styles.uListItem}
@@ -141,7 +158,7 @@ export default function AdminAside({ side, handleSide }) {
             />
             Transactions
           </li>
-          <li
+          {/* <li
             className={styles.uListItem}
             onClick={() => {
               navigate("projectRequest");
@@ -156,7 +173,7 @@ export default function AdminAside({ side, handleSide }) {
               alt=""
             />
             Project Requests
-          </li>
+          </li> */}
           <li
             className={styles.uListItem}
             onClick={() => {

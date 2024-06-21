@@ -34,10 +34,12 @@ import Transaction from "./Components/pages/withdrawlHistory";
 import ProjectRequest from "./Components/Admin/projectRequest";
 import SecondAuth from "./Components/pages/secondAuth";
 import VillaProject from "./Components/Dashboard/villaProject";
-import FlatProject from "./Components/Dashboard/villaProject";
-import ShopProject from "./Components/Dashboard/villaProject";
-import FarmProject from "./Components/Dashboard/villaProject";
-import PlotProject from "./Components/Dashboard/villaProject";
+import PlotProject from "./Components/Dashboard/plotProject";
+import ShopProject from "./Components/Dashboard/shopProject";
+import FlatProject from "./Components/Dashboard/flatProject";
+import FarmProject from "./Components/Dashboard/farmProject";
+import ManageUserProject from "./Components/Admin/manageUserProject";
+import EditUserProject from "./Components/Admin/editUserProject";
 
 // App component responsible for routing and rendering different pages
 export default function App() {
@@ -78,10 +80,12 @@ export default function App() {
       children: [
         { index: true, element: <AdminContent /> },
         { path: "addProject", element: <AddProject /> },
+        { path: "manageUserProject", element: <ManageUserProject /> },
         { path: "kyc", element: <Kyc /> },
         { path: "userAccounts", element: <UserAcounts /> },
         { path: "prospect", element: <Prospects /> },
         { path: "addProject/:id", element: <EditProject /> },
+        { path: "manageUserProject/:id", element: <EditUserProject /> },
         { path: "tranction", element: <Tranctions /> },
         { path: "newProject", element: <NewProject /> },
         { path: "bookingRequest", element: <BookingRequest /> },

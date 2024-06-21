@@ -305,6 +305,12 @@
     height: 20px;
     margin-right: 5px;
 }
+.statusButton{
+    font-size: small;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 /* Media Query for devices with max-width of 768px (tablets and below) */
 @media screen and (max-width: 768px) {
     .mainDiv {

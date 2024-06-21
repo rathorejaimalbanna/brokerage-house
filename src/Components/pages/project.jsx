@@ -23,7 +23,12 @@ export default function Project() {
           id: doc.id, // Ensure unique identifier
           ...doc.data(),
         }));
-        dispatch(projectActions.loadProject(userArray));
+        const querySnapshot2 = await getDocs(collection(db, "userProjects"));
+        const userArray2 = querySnapshot2.docs.map((doc) => ({
+          id: doc.id, // Ensure unique identifier
+          ...doc.data(),
+        }));
+        dispatch(projectActions.loadProject([...userArray, ...userArray2]));
       } catch (error) {
         console.error("Error fetching projects:", error);
       }

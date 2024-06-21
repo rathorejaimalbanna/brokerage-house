@@ -1,17 +1,17 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import styles from "./pages.module.css";
+import styles from "./admin.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { projectActions } from "../../Redux/projectReducer/projectReducer";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { userProjectActions } from "../../Redux/userProjectReducer/userProjectReducer";
 
-function ProjectCard(props) {
-  const navigate = useNavigate();
+function UserProjectCard(props) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   async function deleteProject() {
-    await deleteDoc(doc(db, "projects", props.project.name));
+    await deleteDoc(doc(db, "userProjects", props.project.name));
   }
 
   function handleDelete() {
@@ -20,16 +20,16 @@ function ProjectCard(props) {
         `Are you sure you want to delete Project ${props.project.name}?`
       )
     ) {
-      dispatch(projectActions.removeProject(props.project.name));
+      dispatch(userProjectActions.removeProject(props.project.name));
       deleteProject();
     }
   }
 
   function handleProject() {
-    navigate(`${props.project.name}`);
+    navigate(`${props.id}`);
   }
   return (
-    <Card style={{ width: "25rem" }}>
+    <Card style={{ width: "25rem", position: "relative" }}>
       <Card.Img
         variant="top"
         style={{ maxHeight: "30vh", objectFit: "contain" }}
@@ -46,13 +46,9 @@ function ProjectCard(props) {
           />
           {props.project.location}
         </Card.Text>
+        <Card.Text>Property Type : {props.project.type || "Colony"}</Card.Text>
         <Card.Text>
-          {/* <img
-            className={styles.asideIcon}
-            src="/images/placeholder.png"
-            alt="loc"
-          /> */}
-          Property Type : {props.project.type || "Colony"}
+          User Contact : {props.project.contact || "Colony"}
         </Card.Text>
         <Button
           style={{ marginRight: "25%", fontSize: "small" }}
@@ -69,18 +65,24 @@ function ProjectCard(props) {
             <Button variant="info">Contact Us</Button>
           </Link>
         )}
-        {props.type === "add" && (
-          <Button
-            onClick={handleDelete}
-            variant="warning"
-            style={{ width: "auto", fontSize: "small" }}
-          >
-            Delete Project
-          </Button>
-        )}
+
+        <Button
+          onClick={handleDelete}
+          variant="warning"
+          style={{ width: "auto", fontSize: "small" }}
+        >
+          Delete Project
+        </Button>
+
+        <Button
+          variant={props.project.status === "approved" ? "success" : "danger"}
+          className={styles.statusButton}
+        >
+          {props.project.status}
+        </Button>
       </Card.Body>
     </Card>
   );
 }
 
-export default ProjectCard;
+export default UserProjectCard;

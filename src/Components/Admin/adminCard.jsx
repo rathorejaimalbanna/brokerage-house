@@ -1,13 +1,13 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import styles from "./pages.module.css";
+import styles from "../pages/pages.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { projectActions } from "../../Redux/projectReducer/projectReducer";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 
-function ProjectCard(props) {
+function AdminCard(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   async function deleteProject() {
@@ -26,7 +26,7 @@ function ProjectCard(props) {
   }
 
   function handleProject() {
-    navigate(`${props.project.name}`);
+    navigate(`${props.id}`);
   }
   return (
     <Card style={{ width: "25rem" }}>
@@ -52,7 +52,7 @@ function ProjectCard(props) {
             src="/images/placeholder.png"
             alt="loc"
           /> */}
-          Property Type : {props.project.type || "Colony"}
+          Property Type : Colony Project
         </Card.Text>
         <Button
           style={{ marginRight: "25%", fontSize: "small" }}
@@ -83,4 +83,4 @@ function ProjectCard(props) {
   );
 }
 
-export default ProjectCard;
+export default AdminCard;
