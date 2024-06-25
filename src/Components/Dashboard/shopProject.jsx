@@ -44,6 +44,7 @@ export default function ShopProject(props) {
       dimention,
       direction,
       road,
+      projectStatus: "available",
     };
     alert(
       `New Project ${name} is pending for approval.Once approved will be visible in the project section`

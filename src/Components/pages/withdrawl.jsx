@@ -3,9 +3,12 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import styles from "./pages.module.css";
 import AddWithdrawlRequest from "./addWithdrawlRequest";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../Redux/userReducer/userReducer";
 
 export default function Withdrawl() {
   const [show, setShow] = useState(false);
+  const { user } = useSelector(userSelector);
   function handleAdd() {
     setShow(true);
   }
@@ -19,7 +22,10 @@ export default function Withdrawl() {
           <div className={styles.modalContainer}>
             {" "}
             <div className={styles.modalDiv}>
-              <AddWithdrawlRequest handleClose={handleClose} />
+              <AddWithdrawlRequest
+                firstSale={user.firstSale}
+                handleClose={handleClose}
+              />
             </div>
           </div>
         )}

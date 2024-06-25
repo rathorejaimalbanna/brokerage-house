@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
-import styles from "./admin.module.css";
-import UserProjectModal from "./userProjectModal";
+import styles from "./pages.module.css";
 import { userProjectSelector } from "../../Redux/userProjectReducer/userProjectReducer";
+import UserBookModal from "./userBookModal";
 
-export default function EditUserProject() {
+export default function UserProjectDetails() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const params = useParams();
   const loadedProjects = useSelector(userProjectSelector);
-  const project = loadedProjects[params.id];
+  const projects = loadedProjects.filter((item) => item.name === params.id);
+  const project = projects[0];
   const [show, setShow] = useState(false);
   function handlePropertyEdit() {
+    if (project.projectStatus !== "available") {
+      alert(`Property ${params.id} not available for sale`);
+      return;
+    }
     setShow(true);
   }
   function handleClose() {
@@ -24,9 +32,8 @@ export default function EditUserProject() {
           <div className={styles.modalContainer}>
             {" "}
             <div className={styles.modalDiv}>
-              <UserProjectModal
+              <UserBookModal
                 projectId={params.id}
-                loadedProjects={loadedProjects}
                 project={project}
                 handleClose={handleClose}
               />
@@ -71,10 +78,16 @@ export default function EditUserProject() {
               className={styles.plotDiv}
               onClick={() => handlePropertyEdit()}
               style={{
-                backgroundColor: "rgb(13,202,240)",
+                backgroundColor:
+                  project.projectStatus === "sold"
+                    ? "red"
+                    : project.projectStatus === "booked"
+                    ? "yellow"
+                    : "lightgreen",
+                width: "230px",
               }}
             >
-              <h5>Edit Details</h5>
+              <h5>Book Property</h5>
             </div>
           </div>
           <div>
@@ -84,7 +97,10 @@ export default function EditUserProject() {
             <h5>Location: {project.location}</h5>
             <h5>Specs: {project.specs || "N/A"}</h5>
             <h5>Floor: {project.floor || "N/A"}</h5>
-            <h5>Size: {project.size || "N/A"}</h5>
+            <h5>
+              Size: {project.size || "N/A"}
+              {project.sizeType}
+            </h5>
             <h5>Dimentions: {project.dimention || "N/A"}</h5>
             <h5>Road: {project.road || "N/A"}</h5>
             <h5>Direction: {project.direction}</h5>

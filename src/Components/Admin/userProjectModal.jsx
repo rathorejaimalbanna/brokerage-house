@@ -35,7 +35,7 @@ export default function UserProjectModal(props) {
     console.log(projectObject);
     updateProject(projectObject);
     dispatch(
-      userProjectActions.editProject({
+      userProjectActions.editStatus({
         projectObject,
       })
     );

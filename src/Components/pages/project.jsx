@@ -7,8 +7,12 @@ import {
   projectSelectors,
 } from "../../Redux/projectReducer/projectReducer";
 import ProjectCard from "./card";
-import NewProject from "../Admin/newProject";
 import styles from "./pages.module.css";
+import SelectType from "../Dashboard/selectType";
+import {
+  userProjectActions,
+  userProjectSelector,
+} from "../../Redux/userProjectReducer/userProjectReducer";
 
 export default function Project() {
   const dispatch = useDispatch();
@@ -23,12 +27,13 @@ export default function Project() {
           id: doc.id, // Ensure unique identifier
           ...doc.data(),
         }));
+        dispatch(projectActions.loadProject([...userArray]));
         const querySnapshot2 = await getDocs(collection(db, "userProjects"));
         const userArray2 = querySnapshot2.docs.map((doc) => ({
           id: doc.id, // Ensure unique identifier
           ...doc.data(),
         }));
-        dispatch(projectActions.loadProject([...userArray, ...userArray2]));
+        dispatch(userProjectActions.loadProject([...userArray2]));
       } catch (error) {
         console.error("Error fetching projects:", error);
       }
@@ -44,10 +49,12 @@ export default function Project() {
     setSearchTerm(event.target.value);
   };
 
-  const loadedProjects = useSelector(projectSelectors);
+  const loadedProjects1 = useSelector(projectSelectors);
+  const loadedProjects2 = useSelector(userProjectSelector);
 
   // Filter projects based on search term and project status
   const filteredProjects = useMemo(() => {
+    const loadedProjects = [...loadedProjects1, ...loadedProjects2];
     return loadedProjects.filter(
       (project) =>
         project.status === "approved" &&
@@ -55,14 +62,14 @@ export default function Project() {
           ?.toLowerCase()
           .includes(searchTerm.trim().toLowerCase())
     );
-  }, [loadedProjects, searchTerm]);
+  }, [loadedProjects1, loadedProjects2, searchTerm]);
 
   return (
     <>
       {addProject && (
         <div className={styles.modalContainer}>
           <div className={styles.modalDiv}>
-            <NewProject type="user" toggleAdd={toggleAdd} />
+            <SelectType type="user" toggleAdd={toggleAdd} />
           </div>
         </div>
       )}

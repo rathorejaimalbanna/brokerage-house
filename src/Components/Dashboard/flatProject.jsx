@@ -40,6 +40,7 @@ export default function FlatProject(props) {
       specs: villaType,
       direction,
       floor,
+      projectStatus: "available",
     };
     alert(
       `New Project ${name} is pending for approval.Once approved will be visible in the project section`

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { projectSelectors } from "../../Redux/projectReducer/projectReducer";
@@ -7,6 +7,9 @@ import BookModal from "./bookModal";
 import PlotDetails from "./plotDetails";
 
 export default function ProjectDetails() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const [show, setShow] = useState(false);
   const [plotInfo, setPlotInfo] = useState(false);
   const [plotModalDetail, setModalDetail] = useState({});

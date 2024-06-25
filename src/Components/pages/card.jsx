@@ -26,7 +26,11 @@ function ProjectCard(props) {
   }
 
   function handleProject() {
-    navigate(`${props.project.name}`);
+    if (props.project.type === "colony") {
+      navigate(`${props.project.name}`);
+    } else {
+      navigate(`/userProjectDetails/${props.project.name}`);
+    }
   }
   return (
     <Card style={{ width: "25rem" }}>
@@ -46,14 +50,7 @@ function ProjectCard(props) {
           />
           {props.project.location}
         </Card.Text>
-        <Card.Text>
-          {/* <img
-            className={styles.asideIcon}
-            src="/images/placeholder.png"
-            alt="loc"
-          /> */}
-          Property Type : {props.project.type || "Colony"}
-        </Card.Text>
+        <Card.Text>Property Type : {props.project.type || "Colony"}</Card.Text>
         <Button
           style={{ marginRight: "25%", fontSize: "small" }}
           variant="primary"

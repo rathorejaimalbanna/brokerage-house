@@ -5,37 +5,41 @@ import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions, userSelector } from "../../Redux/userReducer/userReducer";
-import { projectActions } from "../../Redux/projectReducer/projectReducer";
+import {
+  userProjectActions,
+  userProjectSelector,
+} from "../../Redux/userProjectReducer/userProjectReducer";
 
-export default function BookModal(props) {
+export default function UserBookModal(props) {
+  const loadProjects = useSelector(userProjectSelector);
+  const { user } = useSelector(userSelector);
+
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [offer, setOffer] = useState();
   const [addhar, setAddhar] = useState();
-  const [mode, setMode] = useState("cash");
-  const { user } = useSelector(userSelector);
+  const [mode, setMode] = useState();
   const [utr, setUtr] = useState("N/A");
   let bookingArr = [...user.booking];
   const dispatch = useDispatch();
-
   function handleSelect(eventKey) {
     setMode(eventKey);
   }
-  async function updatePlot(array) {
-    const frankDocRef = doc(db, "projects", props.project.name);
+  async function updatePlot() {
+    const frankDocRef = doc(db, "userProjects", props.project.name);
     await updateDoc(frankDocRef, {
-      plots: array,
+      projectStatus: "booked",
     });
   }
   async function addBooking() {
-    await setDoc(doc(db, "Booking Request", props.plotDetail.id), {
+    await setDoc(doc(db, "Booking Request", props.project.name), {
       name,
       contact,
       addhar,
       mode,
       offer,
       utr,
-      plot: props.plotDetail.id,
+      plot: props.project.name,
       email: user.email,
       project: props.project.name,
       status: "Pending",
@@ -45,7 +49,7 @@ export default function BookModal(props) {
   }
   async function addUserBooking(id) {
     let bookingArr = [...user.booking];
-    bookingArr.push(id);
+    bookingArr.push(props.project.name);
     const frankDocRef = doc(db, "userData", user.email);
     await updateDoc(frankDocRef, {
       booking: bookingArr,
@@ -55,23 +59,15 @@ export default function BookModal(props) {
     e.preventDefault();
     alert("Booking Successfull");
     addBooking();
-    var plotsObject = [...props.project.plots];
-    plotsObject[props.plotDetail.arrId] = {
-      id: props.plotDetail.id,
-      status: "booked",
-      price: props.plotDetail.price ? props.plotDetail.price : 0,
-      area: props.plotDetail.area ? props.plotDetail.area : 0,
-    };
-    updatePlot(plotsObject);
-    addUserBooking(props.plotDetail.id);
+    updatePlot();
+    addUserBooking();
     dispatch(
-      projectActions.editPlots({
-        plot: plotsObject,
-        plotId: props.plotId,
-        projectId: props.projectId,
+      userProjectActions.editProject({
+        projectName: props.project.name,
+        projects: loadProjects,
       })
     );
-    bookingArr.push(props.plotDetail.id);
+    bookingArr.push(props.project.name);
     dispatch(userActions.editBooking(bookingArr));
     props.handleClose();
   }
@@ -98,7 +94,7 @@ export default function BookModal(props) {
           <h5>Select Payment Mode</h5>
           <DropdownButton
             id="dropdown-button"
-            title={`Select Payment Method`}
+            title={mode || `Select Payment Method`}
             onSelect={handleSelect}
           >
             <Dropdown.Item eventKey="Bank">Bank</Dropdown.Item>

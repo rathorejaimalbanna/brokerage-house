@@ -37,7 +37,7 @@ export default function Booking() {
         <table>
           <tr>
             <th>Project</th>
-            <th>Plot</th>
+            <th>Project</th>
             <th>Amount</th>
             <th>Payment Mode</th>
             <th>Booking Status</th>

@@ -9,18 +9,27 @@ const projectSlice = createSlice({
   name: "userProject",
   reducers: {
     addProject: (state, action) => {
-      state.projects = state.projects.puch(action.payload);
+      state.projects = state.projects.push(action.payload);
     },
     loadProject: (state, action) => {
       state.projects = action.payload;
     },
     editProject: (state, action) => {
-      state.projects = action.payload.projectObject;
+      var projects = action.payload.projects;
+      var index = projects.findIndex(
+        (item) => item.name === action.payload.projectName
+      );
+      if (index !== -1) {
+        state.projects[index] = { ...projects[index], projectStatus: "booked" };
+      }
     },
     removeProject: (state, action) => {
       state.projects = state.projects.filter(
         (item) => item.name !== action.payload
       );
+    },
+    editStatus: (state, action) => {
+      state.projects = action.payload.projectObject;
     },
   },
 });

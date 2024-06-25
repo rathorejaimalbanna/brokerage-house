@@ -39,7 +39,7 @@ export default function Content() {
         </div>
         <div className={styles.infoDiv}>
           <h5>Wallet Balance</h5>
-          <p>&#8377; 0</p>
+          <p>&#8377; {user.bonus}</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Total Payout</h5>
@@ -47,7 +47,7 @@ export default function Content() {
         </div>
         <div className={styles.infoDiv}>
           <h5>Total Referral Bonous</h5>
-          <p>&#8377; 11000</p>
+          <p>&#8377; {user.bonus}</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Last Referral Bonous</h5>

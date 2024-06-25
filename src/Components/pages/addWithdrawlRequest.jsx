@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import styles from "./pages.module.css";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  setDoc,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions, userSelector } from "../../Redux/userReducer/userReducer";
@@ -79,6 +70,11 @@ export default function AddWithdrawlRequest(props) {
     <>
       <div>
         <h2>Raise Withdrawl Request</h2>
+        {!props.firstSale && (
+          <p style={{ color: "rgb(217,52,68)" }}>
+            Note: Please complete your first sale!
+          </p>
+        )}
         <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
           <h5>Enter Name</h5>
           <input
@@ -119,6 +115,7 @@ export default function AddWithdrawlRequest(props) {
           <div>
             {" "}
             <Button
+              disabled={!props.firstSale}
               type="submit"
               style={{ display: "inline" }}
               className={styles.submitButton}
