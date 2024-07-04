@@ -3,7 +3,8 @@ import styles from "../Admin/admin.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
+import UploadPhoto from "./uploadPhoto.jsx";
 
 export default function FarmProject(props) {
   // const [image, setImage] = useState("");
@@ -15,9 +16,11 @@ export default function FarmProject(props) {
   const [price, setPrice] = useState();
   const [sizeType, setSizeType] = useState();
   const [road, setRoad] = useState();
-  const [dimention, setDimention] = useState();
-  const [direction, setDirection] = useState();
   const [contact, setContact] = useState();
+  const [show, setShow] = useState(false);
+  function handleShow() {
+    setShow(!show);
+  }
   async function uploadProject(obj) {
     // Add a new document in collection "cities"
     await setDoc(doc(db, "userProjects", name), obj);
@@ -41,8 +44,8 @@ export default function FarmProject(props) {
       price,
       sizeType,
       size,
-      dimention,
-      direction,
+      dimention: "N/A",
+      direction: "N/A",
       road,
       projectStatus: "available",
     };
@@ -71,18 +74,30 @@ export default function FarmProject(props) {
 
   return (
     <div>
+      {show && (
+        <div className={styles.modalContainer}>
+          <div className={styles.modalDiv}>
+            <UploadPhoto
+              handleUplaod={handleUplaod}
+              setFile={setFile}
+              handleShow={handleShow}
+            />
+          </div>
+        </div>
+      )}
       <h2 style={{ marginTop: "25px", color: "orangered" }}>
         New Farm House Project
       </h2>
+      <img
+        className={styles.upImg}
+        style={{ height: url ? "150px" : "30px" }}
+        src={url ? url : "/images/remove.png"}
+        alt=""
+      />
+      <Button onClick={handleShow}>
+        {url ? "Change Image" : "Upload Image"}
+      </Button>
       <div>
-        <h4>Upload Image</h4>
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <img
-          className={styles.upImg}
-          src={url ? "/images/upload.png" : "/images/remove.png"}
-          alt=""
-        />
-        <button onClick={handleUplaod}>Upload</button>
         <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
           <h4>Enter Your Contact Details</h4>
           <input
@@ -121,6 +136,7 @@ export default function FarmProject(props) {
           >
             <Dropdown.Item eventKey={"Sq. Feet"}>Sq. Feet</Dropdown.Item>
             <Dropdown.Item eventKey={"Sq. Yard"}>Sq. Yards</Dropdown.Item>
+            <Dropdown.Item eventKey={"Beegha"}>Beegha</Dropdown.Item>
           </DropdownButton>
           <input
             style={{ marginTop: "10px" }}
@@ -139,24 +155,6 @@ export default function FarmProject(props) {
             className={styles.inputField}
             value={road}
             onChange={(e) => setRoad(e.target.value)}
-          />
-          <h4>Farm House Dimensions</h4>
-          <input
-            required
-            type="text"
-            placeholder="Enter dimentions"
-            className={styles.inputField}
-            value={dimention}
-            onChange={(e) => setDimention(e.target.value)}
-          />
-          <h4>Facing Direction</h4>
-          <input
-            required
-            type="text"
-            placeholder="Enter direction"
-            className={styles.inputField}
-            value={direction}
-            onChange={(e) => setDirection(e.target.value)}
           />
           <h4> Demand price</h4>
           <input

@@ -23,6 +23,12 @@ const userSlice = createSlice({
     editBank: (state, action) => {
       state.user.bank = action.payload;
     },
+    editProfile: (state, action) => {
+      state.user.name = action.payload.name;
+      state.user.address = action.payload.address;
+      state.user.phone = action.payload.phone;
+      state.user.imageUrl = action.payload.imageUrl;
+    },
   },
 });
 

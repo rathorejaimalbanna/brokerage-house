@@ -3,7 +3,8 @@ import styles from "../Admin/admin.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
+import UploadPhoto from "./uploadPhoto.jsx";
 
 export default function FlatProject(props) {
   const [location, setLocation] = useState("");
@@ -15,6 +16,11 @@ export default function FlatProject(props) {
   const [floor, setFloor] = useState();
   const [direction, setDirection] = useState();
   const [contact, setContact] = useState();
+  const [furType, setFurType] = useState();
+  const [show, setShow] = useState(false);
+  function handleShow() {
+    setShow(!show);
+  }
   async function uploadProject(obj) {
     // Add a new document in collection "cities"
     await setDoc(doc(db, "userProjects", name), obj);
@@ -41,6 +47,7 @@ export default function FlatProject(props) {
       direction,
       floor,
       projectStatus: "available",
+      furType,
     };
     alert(
       `New Project ${name} is pending for approval.Once approved will be visible in the project section`
@@ -64,20 +71,35 @@ export default function FlatProject(props) {
   function handleSelect(eventKey) {
     setVillaType(eventKey);
   }
+  function handleSelectFur(eventKey) {
+    setFurType(eventKey);
+  }
   return (
     <div>
+      {show && (
+        <div className={styles.modalContainer}>
+          <div className={styles.modalDiv}>
+            <UploadPhoto
+              handleUplaod={handleUplaod}
+              setFile={setFile}
+              handleShow={handleShow}
+            />
+          </div>
+        </div>
+      )}
       <h2 style={{ marginTop: "25px", color: "orangered" }}>
         New Flat Project
       </h2>
+      <img
+        className={styles.upImg}
+        src={url ? url : "/images/remove.png"}
+        style={{ height: url ? "150px" : "30px" }}
+        alt=""
+      />
+      <Button onClick={handleShow}>
+        {url ? "Change Image" : "Upload Image"}
+      </Button>
       <div>
-        <h4>Upload Image</h4>
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <img
-          className={styles.upImg}
-          src={url ? "/images/upload.png" : "/images/remove.png"}
-          alt=""
-        />
-        <button onClick={handleUplaod}>Upload</button>
         <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
           <h4>Enter Your Contact Details</h4>
           <input
@@ -127,6 +149,20 @@ export default function FlatProject(props) {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
+          <DropdownButton
+            id="dropdown-button"
+            title={furType || "Select Furnished Type"}
+            onSelect={handleSelectFur}
+            style={{ marginTop: "10px" }}
+          >
+            <Dropdown.Item eventKey={"Fully Furnished"}>
+              Fully Furnished
+            </Dropdown.Item>
+            <Dropdown.Item eventKey={"Semi Furnished"}>
+              Semi Furnished
+            </Dropdown.Item>
+            <Dropdown.Item eventKey={"None"}>None</Dropdown.Item>
+          </DropdownButton>
           <h4>Facing Direction</h4>
           <input
             required

@@ -35,11 +35,11 @@ export default function Content() {
       <div className={styles.sponserDiv}>
         <div className={styles.infoDiv}>
           <h5>Sponsor By</h5>
-          <p>{user.sponser}</p>
+          <p>{user.sponser || "Brokerage House"}</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Wallet Balance</h5>
-          <p>&#8377; {user.bonus}</p>
+          <p>&#8377; {user.bonus || 0}</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Total Payout</h5>
@@ -47,7 +47,7 @@ export default function Content() {
         </div>
         <div className={styles.infoDiv}>
           <h5>Total Referral Bonous</h5>
-          <p>&#8377; {user.bonus}</p>
+          <p>&#8377; {user.bonus || 0}</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Last Referral Bonous</h5>
@@ -114,13 +114,13 @@ export default function Content() {
           />
           <p>Contact Us</p>
         </div>
-        <div className={styles.buttonDiv}>
+        <div className={styles.buttonDiv} onClick={() => navigate("myProfile")}>
           <img
             className={styles.buttonIcon}
             src="./images/project-management.png"
             alt=""
           />
-          <p>Settings</p>
+          <p>My Profile</p>
         </div>
       </div>
       <div className={styles.sponserDiv}>

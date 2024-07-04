@@ -50,7 +50,7 @@ export default function Aside({ side, handleSide }) {
           >
             <img
               className={styles.asideIcon}
-              src="/images/project-management.png"
+              src="/images/real-estate.png"
               alt=""
             />{" "}
             Projects
@@ -66,7 +66,7 @@ export default function Aside({ side, handleSide }) {
           >
             <img
               className={styles.asideIcon}
-              src="/images/real-estate.png"
+              src="/images/calendar.png"
               alt=""
             />{" "}
             My Booking{" "}
@@ -138,6 +138,22 @@ export default function Aside({ side, handleSide }) {
           >
             <img className={styles.asideIcon} src="/images/bank.png" alt="" />
             Manage Bank
+          </li>
+          <li
+            className={styles.uListItem}
+            onClick={() => {
+              navigate("myProfile");
+              if (side) {
+                handleSide();
+              }
+            }}
+          >
+            <img
+              className={styles.asideIcon}
+              src="/images/project-management.png"
+              alt=""
+            />
+            My Profile
           </li>
           <li
             className={styles.uListItem}

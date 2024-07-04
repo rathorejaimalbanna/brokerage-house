@@ -83,7 +83,16 @@ export default function Dashboard() {
           <span
             style={{ fontWeight: "600", fontSize: "large", minWidth: "100px" }}
           >
-            <img className={styles.asideIcon} src="/images/user.png" alt="" />{" "}
+            <img
+              style={{
+                objectFit: "contain",
+                height: "50px",
+                borderRadius: "50%",
+                width: "50px",
+              }}
+              src={user?.imageUrl ? user.imageUrl : "/images/user.png"}
+              alt=""
+            />{" "}
             {user?.name}
           </span>
           <span style={{ display: "flex" }}>

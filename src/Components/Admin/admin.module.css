@@ -302,7 +302,7 @@
 }
 .upImg{
     object-fit: contain;
-    height: 20px;
+    height: 150px;
     margin-right: 5px;
 }
 .statusButton{

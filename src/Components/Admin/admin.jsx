@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./admin.module.css";
 import AdminAside from "./adminAside";
 import { Outlet } from "react-router";
 import { Button } from "react-bootstrap";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
+import { projectActions } from "../../Redux/projectReducer/projectReducer";
+import { useDispatch } from "react-redux";
 
 const Admin = () => {
-  const [side, setSide] = useState(true);
+  const [side, setSide] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function getData() {
+      const querySnapshot = await getDocs(collection(db, "projects"));
+      // const data = querySnapshot.map((doc)=> doc.data())
+      const userArray = [];
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        userArray.push({ ...doc.data() });
+      });
+      dispatch(projectActions.loadProject(userArray));
+    }
+    getData();
+  }, [dispatch]);
   function handleSide() {
     setSide(!side);
   }

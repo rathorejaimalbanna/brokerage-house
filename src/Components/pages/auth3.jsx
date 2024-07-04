@@ -74,21 +74,3 @@ const Auth = (props) => {
 };
 
 export default Auth;
-
-// const url = `https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-456FA7536D6B441&flowType=SMS&mobileNumber=${mobileNumber}`;
-// const authToken =
-//   "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDLTQ1NkZBNzUzNkQ2QjQ0MSIsImlhdCI6MTcxOTYzNzc3MywiZXhwIjoxODc3MzE3NzczfQ.q8SF2QEx1LXVob5ESudjAku8JwpyCCYydQFPNN4kP7ryXKtKG_jy_yU53CM8VkpcMATyCvEJQiGW83NpPcChlg";
-// setVerify(true);
-// try {
-//   const res = await fetch(url, {
-//     method: "POST",
-//     headers: {
-//       authToken,
-//     },
-//   });
-//   console.log(res.data);
-//   if (!res.ok) throw new Error(`Error: ${res.status}`);
-
-//   const data = await res.json();
-//   setResponse(data.message);
-// } catch (err) {}

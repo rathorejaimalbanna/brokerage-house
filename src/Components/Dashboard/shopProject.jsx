@@ -3,7 +3,8 @@ import styles from "../Admin/admin.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
+import UploadPhoto from "./uploadPhoto.jsx";
 
 export default function ShopProject(props) {
   // const [image, setImage] = useState("");
@@ -18,6 +19,10 @@ export default function ShopProject(props) {
   const [dimention, setDimention] = useState();
   const [direction, setDirection] = useState();
   const [contact, setContact] = useState();
+  const [show, setShow] = useState(false);
+  function handleShow() {
+    setShow(!show);
+  }
   async function uploadProject(obj) {
     // Add a new document in collection "cities"
     await setDoc(doc(db, "userProjects", name), obj);
@@ -71,18 +76,30 @@ export default function ShopProject(props) {
 
   return (
     <div>
+      {show && (
+        <div className={styles.modalContainer}>
+          <div className={styles.modalDiv}>
+            <UploadPhoto
+              handleUplaod={handleUplaod}
+              setFile={setFile}
+              handleShow={handleShow}
+            />
+          </div>
+        </div>
+      )}
       <h2 style={{ marginTop: "25px", color: "orangered" }}>
         New Shop Project
       </h2>
+      <img
+        className={styles.upImg}
+        src={url ? url : "/images/remove.png"}
+        style={{ height: url ? "150px" : "30px" }}
+        alt=""
+      />
+      <Button onClick={handleShow}>
+        {url ? "Change Image" : "Upload Image"}
+      </Button>
       <div>
-        <h4>Upload Image</h4>
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <img
-          className={styles.upImg}
-          src={url ? "/images/upload.png" : "/images/remove.png"}
-          alt=""
-        />
-        <button onClick={handleUplaod}>Upload</button>
         <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
           <h4>Enter Your Contact Details</h4>
           <input

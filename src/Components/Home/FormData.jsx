@@ -91,6 +91,7 @@ export default function FormData({ isLink }) {
       link,
       bonus: 11000,
       firstSale: false,
+      imageUrl: null,
     });
   }
 
@@ -171,15 +172,16 @@ export default function FormData({ isLink }) {
                 required
               />
               {/* Render password input */}
-              <input
-                type="password"
-                placeholder="Password"
-                className={styles.formInput}
-                onChange={(e) => setPass(e.target.value)}
-                required
-              />
+
               {data === "Sign Up" && (
                 <>
+                  <input
+                    type="number"
+                    placeholder="Phone Number"
+                    className={styles.formInput}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                  />
                   <input
                     type="text"
                     placeholder="Full Name"
@@ -187,19 +189,24 @@ export default function FormData({ isLink }) {
                     onChange={(e) => setName(e.target.value)}
                     required
                   />
+                </>
+              )}
+              <input
+                type="password"
+                placeholder="Set Password"
+                className={styles.formInput}
+                onChange={(e) => setPass(e.target.value)}
+                required
+              />
+              {data === "Sign Up" && (
+                <>
+                  {" "}
                   <input
                     type="text"
                     placeholder="Sponser Code"
                     className={styles.formInput}
                     value={code}
                     onChange={(e) => setCode(e.target.value)}
-                  />
-                  <input
-                    type="number"
-                    placeholder="Phone Number"
-                    className={styles.formInput}
-                    onChange={(e) => setPhone(e.target.value)}
-                    required
                   />
                   <input
                     type="text"
@@ -215,6 +222,7 @@ export default function FormData({ isLink }) {
                   />
                 </>
               )}
+
               {error && (
                 <p style={{ color: "red" }}>
                   {error}

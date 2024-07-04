@@ -3,7 +3,8 @@ import styles from "../Admin/admin.module.css";
 import { doc, setDoc } from "firebase/firestore";
 import { db, storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Button, Dropdown, DropdownButton } from "react-bootstrap";
+import UploadPhoto from "./uploadPhoto.jsx";
 
 export default function VillaProject(props) {
   // const [image, setImage] = useState("");
@@ -19,6 +20,13 @@ export default function VillaProject(props) {
   const [dimention, setDimention] = useState();
   const [direction, setDirection] = useState();
   const [contact, setContact] = useState();
+  const [furType, setFurType] = useState(null);
+  const [corner, setCorner] = useState(null);
+  const [backRoad, setBackRoad] = useState(null);
+  const [show, setShow] = useState(false);
+  function handleShow() {
+    setShow(!show);
+  }
   async function uploadProject(obj) {
     // Add a new document in collection "cities"
     await setDoc(doc(db, "userProjects", name), obj);
@@ -47,6 +55,9 @@ export default function VillaProject(props) {
       direction,
       road,
       projectStatus: "available",
+      furType,
+      corner,
+      backRoad,
     };
     alert(
       `New Project ${name} is pending for approval.Once approved will be visible in the project section`
@@ -73,20 +84,38 @@ export default function VillaProject(props) {
   function handleSelect(eventKey) {
     setVillaType(eventKey);
   }
+  function handleSelectFurType(eventKey) {
+    setFurType(eventKey);
+  }
+  function handleCorner(eventKey) {
+    setCorner(eventKey);
+  }
   return (
     <div>
+      {show && (
+        <div className={styles.modalContainer}>
+          <div className={styles.modalDiv}>
+            <UploadPhoto
+              handleUplaod={handleUplaod}
+              setFile={setFile}
+              handleShow={handleShow}
+            />
+          </div>
+        </div>
+      )}
       <h2 style={{ marginTop: "25px", color: "orangered" }}>
         New Villa Project
       </h2>
+      <img
+        className={styles.upImg}
+        src={url ? url : "/images/remove.png"}
+        style={{ height: url ? "150px" : "30px" }}
+        alt=""
+      />
+      <Button onClick={handleShow}>
+        {url ? "Change Image" : "Upload Image"}
+      </Button>
       <div>
-        <h4>Upload Image</h4>
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <img
-          className={styles.upImg}
-          src={url ? "/images/upload.png" : "/images/remove.png"}
-          alt=""
-        />
-        <button onClick={handleUplaod}>Upload</button>
         <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
           <h4>Enter Your Contact Details</h4>
           <input
@@ -97,7 +126,7 @@ export default function VillaProject(props) {
             value={contact}
             onChange={(e) => setContact(e.target.value)}
           />
-          <h4>Enter Villa Name</h4>
+          <h4>Villa name (Colony name/number)</h4>
           <input
             type="text"
             required
@@ -117,6 +146,7 @@ export default function VillaProject(props) {
             <Dropdown.Item eventKey={"2Bhk"}>2Bhk</Dropdown.Item>
             <Dropdown.Item eventKey={"3Bhk"}>3Bhk</Dropdown.Item>
             <Dropdown.Item eventKey={"4Bhk"}>4Bhk</Dropdown.Item>
+            <Dropdown.Item eventKey={"5Bhk"}>5Bhk</Dropdown.Item>
           </DropdownButton>
           <h4>Enter Location</h4>
           <input
@@ -155,6 +185,23 @@ export default function VillaProject(props) {
             value={road}
             onChange={(e) => setRoad(e.target.value)}
           />
+          <h4>Back Road Size in feets</h4>
+          <input
+            type="number"
+            placeholder="Enter back road size"
+            className={styles.inputField}
+            value={road}
+            onChange={(e) => setBackRoad(e.target.value)}
+          />
+          <DropdownButton
+            id="dropdown-button"
+            title={corner || "Corner/Non corner"}
+            onSelect={handleCorner}
+            style={{ marginTop: "10px" }}
+          >
+            <Dropdown.Item eventKey={"Corner"}>Corner</Dropdown.Item>
+            <Dropdown.Item eventKey={"Non Corner"}>Non Corner</Dropdown.Item>
+          </DropdownButton>
           <h4>Villa Dimensions</h4>
           <input
             required
@@ -164,6 +211,20 @@ export default function VillaProject(props) {
             value={dimention}
             onChange={(e) => setDimention(e.target.value)}
           />
+          <DropdownButton
+            id="dropdown-button"
+            title={furType || "Select Furnished Type"}
+            onSelect={handleSelectFurType}
+            style={{ marginTop: "10px" }}
+          >
+            <Dropdown.Item eventKey={"Fully Furnished"}>
+              Fully Furnished
+            </Dropdown.Item>
+            <Dropdown.Item eventKey={"Semi Furnished"}>
+              Semi Furnished
+            </Dropdown.Item>
+            <Dropdown.Item eventKey={"None"}>None</Dropdown.Item>
+          </DropdownButton>
           <h4>Facing Direction</h4>
           <input
             required

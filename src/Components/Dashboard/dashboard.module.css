@@ -291,6 +291,15 @@
         font-size: 1rem;
         font-weight: 500;
     }
+    .modalContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .modalDiv{
+        width: 80%;
+        position: initial;
+    }
     .headContent, .refrralDiv {
         padding: 2%;
     }

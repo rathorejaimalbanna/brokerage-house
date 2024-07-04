@@ -41,6 +41,7 @@ import FarmProject from "./Components/Dashboard/farmProject";
 import ManageUserProject from "./Components/Admin/manageUserProject";
 import EditUserProject from "./Components/Admin/editUserProject";
 import UserProjectDetails from "./Components/pages/userProjectDetails";
+import Profile from "./Components/pages/Profile";
 
 // App component responsible for routing and rendering different pages
 export default function App() {
@@ -70,6 +71,7 @@ export default function App() {
         { path: "flatProject", element: <FlatProject /> },
         { path: "plotProject", element: <PlotProject /> },
         { path: "shopProject", element: <ShopProject /> },
+        { path: "myProfile", element: <Profile /> },
       ],
     },
     { path: "home", element: <Home /> },

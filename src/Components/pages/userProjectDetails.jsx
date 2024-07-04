@@ -95,16 +95,24 @@ export default function UserProjectDetails() {
             <br />
             <h5>Type: {project.type}</h5>
             <h5>Location: {project.location}</h5>
-            <h5>Specs: {project.specs || "N/A"}</h5>
-            <h5>Floor: {project.floor || "N/A"}</h5>
-            <h5>
-              Size: {project.size || "N/A"}
-              {project.sizeType}
-            </h5>
-            <h5>Dimentions: {project.dimention || "N/A"}</h5>
-            <h5>Road: {project.road || "N/A"}</h5>
+
+            {project.specs && <h5>Floor:{project.specs} </h5>}
+            {project.floor && <h5>Floor:{project.floor} </h5>}
+            {project.size && (
+              <h5>
+                Size: {project.size || "N/A"}
+                {project.sizeType}
+              </h5>
+            )}
+            {project.dimention && (
+              <h5>Dimentions: {project.dimention || "N/A"}</h5>
+            )}
+            {project.road && <h5>Front Road: {project.road || "N/A"}</h5>}
+            {project.backRoad && <h5>Back Road: {project.backRoad}</h5>}
             <h5>Direction: {project.direction}</h5>
             <h5>Price: {project.price}</h5>
+            {project.furType && <h5>Furnished Type: {project.furType}</h5>}
+            {project.corner && <h5>Corner/Non Corner: {project.corner}</h5>}
           </div>
         </div>
       </>
