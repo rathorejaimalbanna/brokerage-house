@@ -74,7 +74,7 @@ export default function NewProject(props) {
         <h4>Upload Image</h4>
         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
         <img
-          className={styles.upImg}
+          className={styles.asideIcon}
           src={url ? "/images/upload.png" : "/images/remove.png"}
           alt=""
         />

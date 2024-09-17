@@ -86,9 +86,9 @@ export default function Dashboard() {
             <img
               style={{
                 objectFit: "contain",
-                height: "50px",
+                height: "25px",
                 borderRadius: "50%",
-                width: "50px",
+                width: "30px",
               }}
               src={user?.imageUrl ? user.imageUrl : "/images/user.png"}
               alt=""

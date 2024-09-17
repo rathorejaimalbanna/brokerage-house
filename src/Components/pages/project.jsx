@@ -101,7 +101,7 @@ export default function Project() {
             <ProjectCard type="project" key={id} id={id} project={item} />
           ))
         ) : (
-          <p>No projects found.</p>
+          <p>Loading Projects...</p>
         )}
       </div>
     </>
