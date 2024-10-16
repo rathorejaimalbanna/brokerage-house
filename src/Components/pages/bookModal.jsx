@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import styles from "./pages.module.css";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -10,17 +10,17 @@ import { projectActions } from "../../Redux/projectReducer/projectReducer";
 export default function BookModal(props) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
-  const [offer, setOffer] = useState();
+  // const [offer, setOffer] = useState();
   const [addhar, setAddhar] = useState();
-  const [mode, setMode] = useState("cash");
+  // const [mode, setMode] = useState("cash");
   const { user } = useSelector(userSelector);
-  const [utr, setUtr] = useState("N/A");
+  // const [utr, setUtr] = useState("N/A");
   let bookingArr = [...user.booking];
   const dispatch = useDispatch();
 
-  function handleSelect(eventKey) {
-    setMode(eventKey);
-  }
+  // function handleSelect(eventKey) {
+  //   setMode(eventKey);
+  // }
   async function updatePlot(array) {
     const frankDocRef = doc(db, "projects", props.project.name);
     await updateDoc(frankDocRef, {
@@ -32,9 +32,9 @@ export default function BookModal(props) {
       name,
       contact,
       addhar,
-      mode,
-      offer,
-      utr,
+      // mode,
+      // offer,
+      // utr,
       plot: props.plotDetail.id,
       email: user.email,
       project: props.project.name,
@@ -95,13 +95,13 @@ export default function BookModal(props) {
             placeholder="Contact No."
             className={styles.inputFieldModal}
           />
-          <h5>Select Payment Mode</h5>
-          <DropdownButton
+          {/* <h5>Select Payment Mode</h5> */}
+          {/* <DropdownButton
             id="dropdown-button"
             title={`Select Payment Method`}
             onSelect={handleSelect}
-          >
-            <Dropdown.Item eventKey="Bank">Bank</Dropdown.Item>
+          > */}
+          {/* <Dropdown.Item eventKey="Bank">Bank</Dropdown.Item>
             <Dropdown.Item eventKey="Cash">Cash</Dropdown.Item>
             <Dropdown.Item eventKey="Cheque">Cheque</Dropdown.Item>
           </DropdownButton>
@@ -115,15 +115,15 @@ export default function BookModal(props) {
                 onChange={(e) => setUtr(e.target.value)}
               />
             </>
-          )}
-          <h5>Booking Amount</h5>
+          )} */}
+          {/* <h5>Booking Amount</h5>
           <input
             required
             onChange={(e) => setOffer(e.target.value)}
             type="number"
             placeholder="Enter Ammount "
             className={styles.inputFieldModal}
-          />
+          /> */}
           <h5>Provide Addhar Number</h5>
           <input
             required

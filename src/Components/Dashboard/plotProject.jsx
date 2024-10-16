@@ -44,7 +44,7 @@ const ImageSlider = ({ images }) => {
           <img
             src={image}
             alt={`Slide ${index}`}
-            style={{ width: "100px", height: "150px", marginLeft: "45%" }}
+            style={{ width: "200px", height: "150px", marginLeft: "45%" }}
           />
         </div>
       ))}
@@ -110,7 +110,7 @@ export default function PlotProject(props) {
     uploadProject(obj);
   }
   function handleUplaod() {
-    if (!file) {
+    if (!file || !file.type.startsWith("image/")) {
       alert("Please select a valid image");
       return;
     }
@@ -163,7 +163,7 @@ export default function PlotProject(props) {
           </div>
         </div>
       )}
-      {showImgArr && (
+      {/* {showImgArr && (
         <div className={styles.modalContainer}>
           <div className={styles.modalDiv}>
             <UploadPhotoArray
@@ -173,7 +173,7 @@ export default function PlotProject(props) {
             />
           </div>
         </div>
-      )}
+      )} */}
       <div>
         <h2 style={{ marginTop: "25px", color: "orangered" }}>
           New Plot Project
@@ -188,7 +188,7 @@ export default function PlotProject(props) {
         <Button onClick={handleShow}>
           {url ? "Change Image" : "Upload Image"}
         </Button>
-        <h4>Additional Photos (Optional)</h4>
+        {/* <h4>Additional Photos (Optional)</h4>
         <Button
           style={{ marginRight: "10px", marginBottom: "8px" }}
           onClick={ShowImgArr}
@@ -207,8 +207,8 @@ export default function PlotProject(props) {
         <Button onClick={ShowImgArr}>Upload Image4</Button>
         <div>
           <h2>Image Slider</h2>
-          <ImageSlider images={imgArray} />
-        </div>
+          <ImageSlider images={imgArray} /> */}
+        {/* </div> */}
         <br />
         <div>
           <form onSubmit={handleSubmit} style={{ marginTop: "25px" }}>
@@ -230,11 +230,11 @@ export default function PlotProject(props) {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <h4>Enter Location</h4>
+            <h4>Enter Address</h4>
             <input
               type="text"
               required
-              placeholder="Location"
+              placeholder="Address"
               className={styles.inputField}
               value={location}
               onChange={(e) => setLocation(e.target.value)}

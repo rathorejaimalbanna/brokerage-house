@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 export default function CommissionModal(props) {
   const [value, setValue] = useState(null);
   function handleSubmit() {
-    if (!value) {
+    if (!value || !Number) {
       alert("Enter a valid % value");
       return;
     }

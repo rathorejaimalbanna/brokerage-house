@@ -43,15 +43,15 @@ export default function Content() {
         </div>
         <div className={styles.infoDiv}>
           <h5>Total Payout</h5>
-          <p>&#8377; 0</p>
+          <p>&#8377; {user.payout || 0} </p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Total Referral Bonous</h5>
-          <p>&#8377; {user.bonus || 0}</p>
+          <p>&#8377; {user.referral || 0}</p>
         </div>
         <div className={styles.infoDiv}>
           <h5>Last Referral Bonous</h5>
-          <p>&#8377; 0</p>
+          <p>&#8377; {user.lastReferral || 0}</p>
         </div>
         <button
           style={{ border: "none" }}

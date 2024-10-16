@@ -140,11 +140,11 @@ export default function FlatProject(props) {
             <Dropdown.Item eventKey={"3Bhk"}>3Bhk</Dropdown.Item>
             <Dropdown.Item eventKey={"4Bhk"}>4Bhk</Dropdown.Item>
           </DropdownButton>
-          <h4>Enter Location</h4>
+          <h4>Enter Address</h4>
           <input
             type="text"
             required
-            placeholder="Location"
+            placeholder="Address"
             className={styles.inputField}
             value={location}
             onChange={(e) => setLocation(e.target.value)}

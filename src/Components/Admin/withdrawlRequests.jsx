@@ -1,4 +1,10 @@
-import { addDoc, collection, getDocs, updateDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  increment,
+  updateDoc,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { doc } from "firebase/firestore";
@@ -43,6 +49,12 @@ export default function WithdrawlRequest() {
       const washingtonRef = doc(db, "Withdrawl Request", item.ammount);
       await updateDoc(washingtonRef, {
         status: "Approved",
+      });
+      const washingtonRef2 = doc(db, "userData", item.email);
+      const withdrawlAmmount = item.ammount;
+      await updateDoc(washingtonRef2, {
+        bonus: increment(-withdrawlAmmount),
+        payout: increment(withdrawlAmmount),
       });
       navigate("/admin/withdrawlRequest");
     }

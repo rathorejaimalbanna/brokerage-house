@@ -88,14 +88,19 @@ export default function BookingRequest() {
   }
   async function giveBonus(commission) {
     const washingtonRef1 = doc(db, "userData", userEmail);
-    const bonusAmmount1 = ammount * commission;
+    var bonusAmmount1 = ammount * commission;
+    bonusAmmount1 = Math.floor(bonusAmmount1);
+    var bonusAmmount3 = bonusAmmount1 * 0.9;
+    bonusAmmount3 = Math.floor(bonusAmmount3);
     await updateDoc(washingtonRef1, {
-      bonus: increment(bonusAmmount1),
+      bonus: increment(bonusAmmount3),
     });
     const washingtonRef2 = doc(db, "userData", sponserEmail);
-    const bonusAmmount2 = bonusAmmount1 * 0.5;
+    const bonusAmmount2 = bonusAmmount1 - bonusAmmount3;
     await updateDoc(washingtonRef2, {
       bonus: increment(bonusAmmount2),
+      lastReferral: bonusAmmount2,
+      referral: increment(bonusAmmount2),
     });
   }
   async function handleApprove(item) {

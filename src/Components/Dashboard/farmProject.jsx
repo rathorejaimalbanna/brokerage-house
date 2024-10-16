@@ -118,11 +118,11 @@ export default function FarmProject(props) {
             onChange={(e) => setName(e.target.value)}
           />
 
-          <h4>Enter Location</h4>
+          <h4>Enter Address</h4>
           <input
             type="text"
             required
-            placeholder="Location"
+            placeholder="Address"
             className={styles.inputField}
             value={location}
             onChange={(e) => setLocation(e.target.value)}

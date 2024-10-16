@@ -92,6 +92,9 @@ export default function FormData({ isLink }) {
       bonus: 11000,
       firstSale: false,
       imageUrl: null,
+      lastReferral: 0,
+      referral: 0,
+      payout: 0,
     });
   }
 
@@ -110,7 +113,7 @@ export default function FormData({ isLink }) {
       });
     setTimeout(() => {
       navigate(`/secondAuth/${email}`);
-    }, 1200);
+    }, 2000);
   }
 
   async function handleLogIN(e) {
