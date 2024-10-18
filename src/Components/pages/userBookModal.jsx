@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Dropdown, DropdownButton } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import styles from "./pages.module.css";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -16,15 +16,15 @@ export default function UserBookModal(props) {
 
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
-  const [offer, setOffer] = useState();
   const [addhar, setAddhar] = useState();
-  const [mode, setMode] = useState();
-  const [utr, setUtr] = useState("N/A");
+  // const [offer, setOffer] = useState();
+  // const [mode, setMode] = useState();
+  // const [utr, setUtr] = useState("N/A");
   let bookingArr = [...user.booking];
   const dispatch = useDispatch();
-  function handleSelect(eventKey) {
-    setMode(eventKey);
-  }
+  // function handleSelect(eventKey) {
+  //   setMode(eventKey);
+  // }
   async function updatePlot() {
     const frankDocRef = doc(db, "userProjects", props.project.name);
     await updateDoc(frankDocRef, {
@@ -36,9 +36,9 @@ export default function UserBookModal(props) {
       name,
       contact,
       addhar,
-      mode,
-      offer,
-      utr,
+      // mode,
+      // offer,
+      // utr,
       plot: props.project.name,
       email: user.email,
       project: props.project.name,
@@ -91,7 +91,7 @@ export default function UserBookModal(props) {
             placeholder="Contact No."
             className={styles.inputFieldModal}
           />
-          <h5>Select Payment Mode</h5>
+          {/* <h5>Select Payment Mode</h5>
           <DropdownButton
             id="dropdown-button"
             title={mode || `Select Payment Method`}
@@ -119,7 +119,7 @@ export default function UserBookModal(props) {
             type="number"
             placeholder="Enter Ammount "
             className={styles.inputFieldModal}
-          />
+          /> */}
           <h5>Provide Addhar Number</h5>
           <input
             required

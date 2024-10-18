@@ -37,9 +37,9 @@ export default function Booking() {
         <table>
           <tr>
             <th>Project</th>
-            <th>Project</th>
-            <th>Amount</th>
-            <th>Payment Mode</th>
+            <th>Plot</th>
+            {/* <th>Amount</th> */}
+            {/* <th>Payment Mode</th> */}
             <th>Booking Status</th>
           </tr>
           {plots.length > 0 &&
@@ -47,8 +47,8 @@ export default function Booking() {
               <tr>
                 <td>{p.project}</td>
                 <td>{p.plot}</td>
-                <td>{p.offer}</td>
-                <td>{p.mode}</td>
+                {/* <td>{p.offer}</td>
+                <td>{p.mode}</td> */}
                 <td>{p.status}</td>
               </tr>
             ))}

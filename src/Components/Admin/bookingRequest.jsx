@@ -1,26 +1,19 @@
-import {
-  addDoc,
-  collection,
-  getDocs,
-  increment,
-  updateDoc,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs, updateDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase";
 import { doc } from "firebase/firestore";
 import styles from "./admin.module.css";
 import { useSelector } from "react-redux";
 import { projectSelectors } from "../../Redux/projectReducer/projectReducer";
-import CommissionModal from "../pages/commissionModal";
+// import CommissionModal from "../pages/commissionModal";
 
 export default function BookingRequest() {
   const [userData, setUserData] = useState([]);
-  const [modal, setModal] = useState(false);
+  // const [modal, setModal] = useState(false);
   const loadProjects = useSelector(projectSelectors);
-  const [ammount, setAmmount] = useState(0);
-  const [sponserEmail, setSponserEmail] = useState("Brokerage House");
-  const [userEmail, setUserEmail] = useState(null);
-  // const navigate = useNavigate();
+  // const [ammount, setAmmount] = useState(0);
+  // const [sponserEmail, setSponserEmail] = useState("Brokerage House");
+  // const [userEmail, setUserEmail] = useState(null);
 
   async function getRequest() {
     const querySnapshot = await getDocs(collection(db, "Booking Request"));
@@ -86,23 +79,23 @@ export default function BookingRequest() {
       firstSale: true,
     });
   }
-  async function giveBonus(commission) {
-    const washingtonRef1 = doc(db, "userData", userEmail);
-    var bonusAmmount1 = ammount * commission;
-    bonusAmmount1 = Math.floor(bonusAmmount1);
-    var bonusAmmount3 = bonusAmmount1 * 0.9;
-    bonusAmmount3 = Math.floor(bonusAmmount3);
-    await updateDoc(washingtonRef1, {
-      bonus: increment(bonusAmmount3),
-    });
-    const washingtonRef2 = doc(db, "userData", sponserEmail);
-    const bonusAmmount2 = bonusAmmount1 - bonusAmmount3;
-    await updateDoc(washingtonRef2, {
-      bonus: increment(bonusAmmount2),
-      lastReferral: bonusAmmount2,
-      referral: increment(bonusAmmount2),
-    });
-  }
+  // async function giveBonus(commission) {
+  //   const washingtonRef1 = doc(db, "userData", userEmail);
+  //   var bonusAmmount1 = ammount * commission;
+  //   bonusAmmount1 = Math.floor(bonusAmmount1);
+  //   var bonusAmmount3 = bonusAmmount1 * 0.9;
+  //   bonusAmmount3 = Math.floor(bonusAmmount3);
+  //   await updateDoc(washingtonRef1, {
+  //     bonus: increment(bonusAmmount3),
+  //   });
+  //   const washingtonRef2 = doc(db, "userData", sponserEmail);
+  //   const bonusAmmount2 = bonusAmmount1 - bonusAmmount3;
+  //   await updateDoc(washingtonRef2, {
+  //     bonus: increment(bonusAmmount2),
+  //     lastReferral: bonusAmmount2,
+  //     referral: increment(bonusAmmount2),
+  //   });
+  // }
   async function handleApprove(item) {
     var book = window.confirm("Proceed to confirm booking");
     if (book) {
@@ -111,8 +104,8 @@ export default function BookingRequest() {
         addhar: item.addhar,
         contact: item.contact,
         plot: item.plot,
-        mode: item.mode,
-        offer: item.offer,
+        // mode: item.mode,
+        // offer: item.offer,
         email: item.email,
         project: item.project,
       });
@@ -121,30 +114,30 @@ export default function BookingRequest() {
         status: "Approved",
       });
       var newData = userData.filter((doc) => doc.project !== item.project);
-      if (item.sponserEmail !== "Brokerage House") {
-        toggleModal(item.sponserEmail, item.offer, item.email);
-      }
+      // if (item.sponserEmail !== "Brokerage House") {
+      //   toggleModal(item.sponserEmail, item.offer, item.email);
+      // }
       setUserData(newData);
       firstSaleApproval(item.email);
     }
   }
 
-  function toggleModal(email, ammount, userEmail) {
-    setSponserEmail(email);
-    setAmmount(ammount);
-    setUserEmail(userEmail);
-    setModal(!modal);
-  }
-  function closeModal() {
-    setModal(false);
-  }
+  // function toggleModal(email, ammount, userEmail) {
+  //   setSponserEmail(email);
+  //   setAmmount(ammount);
+  //   setUserEmail(userEmail);
+  //   setModal(!modal);
+  // }
+  // function closeModal() {
+  //   setModal(false);
+  // }
 
   useEffect(() => {
     getRequest();
   }, [userData]);
   return (
     <>
-      {modal && (
+      {/* {modal && (
         <div className={styles.modalContainer}>
           {" "}
           <div className={styles.modalDiv}>
@@ -155,7 +148,7 @@ export default function BookingRequest() {
             />
           </div>
         </div>
-      )}
+      )} */}
       <div className={styles.userTable}>
         <table>
           <thead>
@@ -163,9 +156,9 @@ export default function BookingRequest() {
             <th>Addhar</th>
             <th>Contact</th>
             <th>Property</th>
-            <th>Payment Mode</th>
-            <th>Utr</th>
-            <th>Ammount</th>
+            {/* <th>Payment Mode</th> */}
+            {/* <th>Utr</th> */}
+            {/* <th>Ammount</th> */}
             <th>Actions</th>
           </thead>
           <tbody>
@@ -178,9 +171,9 @@ export default function BookingRequest() {
                       <td key={id}>{item.addhar} </td>
                       <td key={id}>{item.contact}</td>
                       <td key={id}>{item.plot}</td>
-                      <td key={id}>{item.mode}</td>
-                      <td key={id}>{item.utr}</td>
-                      <td key={id}>{item.offer}</td>
+                      {/* <td key={id}>{item.mode}</td> */}
+                      {/* <td key={id}>{item.utr}</td> */}
+                      {/* <td key={id}>{item.offer}</td> */}
                       <td key={id}>
                         <button
                           onClick={() => handleApprove(item)}

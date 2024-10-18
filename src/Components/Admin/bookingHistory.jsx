@@ -26,8 +26,8 @@ export default function BookingHistory() {
           <th>Addhar</th>
           <th>Contact</th>
           <th>Property</th>
-          <th>Payment Mode</th>
-          <th>Ammount</th>
+          {/* <th>Payment Mode</th>
+          <th>Ammount</th> */}
         </thead>
         <tbody>
           {userData.length > 0 &&
@@ -37,8 +37,8 @@ export default function BookingHistory() {
                 <td>{item.addhar} </td>
                 <td>{item.contact}</td>
                 <td>{item.plot}</td>
-                <td>{item.mode}</td>
-                <td>{item.offer}</td>
+                {/* <td>{item.mode}</td>
+                <td>{item.offer}</td> */}
               </tr>
             ))}
         </tbody>

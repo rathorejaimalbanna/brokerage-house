@@ -11,7 +11,7 @@ export default function AddWithdrawlRequest(props) {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [ammount, setAmmount] = useState();
-  const [bank, setBank] = useState("");
+  const [bank, setBank] = useState(null);
   const [data, setData] = useState([]);
   const [showName, setShowName] = useState("");
   const dispatch = useDispatch();
@@ -59,6 +59,16 @@ export default function AddWithdrawlRequest(props) {
   }
   async function handleSubmit(e) {
     e.preventDefault();
+    if (bank === null) {
+      alert("Please select a valid bank account");
+      return;
+    }
+    if (user.bonus < ammount) {
+      alert(
+        "Withdrawl ammount exceeds available balance.Please enter a valid ammount"
+      );
+      return;
+    }
     alert("Request Sent for withdrawl");
     addBooking();
     addUserWithdrawl();
